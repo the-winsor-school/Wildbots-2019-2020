@@ -92,7 +92,7 @@ public class DrivingLibrary {
         opMode.telemetry.addData("rl", strafeBias[3]);
     }
 
-    public void driveStraight(float x, float y) {
+    public void strafe(float x, float y) {
         /* inputs are joystick values
         function includes strafing
 

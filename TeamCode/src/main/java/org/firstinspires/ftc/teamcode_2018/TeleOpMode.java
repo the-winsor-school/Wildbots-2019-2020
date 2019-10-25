@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -92,7 +92,7 @@ public class TeleOpMode extends LinearOpMode {
             }
 
             // drive straight
-            drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+            drivingLibrary.strafe(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);
 
             /* // drawer stop off
