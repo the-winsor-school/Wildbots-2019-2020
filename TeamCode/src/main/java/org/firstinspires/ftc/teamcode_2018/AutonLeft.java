@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -68,7 +68,7 @@ public class AutonLeft extends LinearOpMode {
                 sleep(7000);
                 latchArm.setPower(0);
 
-                drivingLibrary.driveStraight(0.75f, 0);
+                drivingLibrary.strafe(0.75f, 0);
                 sleep(500);
                 drivingLibrary.floatStop();
 
@@ -83,7 +83,7 @@ public class AutonLeft extends LinearOpMode {
 
         while (opModeIsActive() && runTime.seconds() < 1.0) {
             //drive backwards
-            drivingLibrary.driveStraight(0, -.75f);
+            drivingLibrary.strafe(0, -.75f);
         }
 
         while (opModeIsActive() && runTime.seconds() < 3.0) {

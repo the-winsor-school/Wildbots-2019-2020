@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,7 +20,7 @@ public class ExampleAuton extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()){
-            drivingLibrary.driveStraight(0,1);
+            drivingLibrary.strafe(0,1);
             sleep(2000);
             drivingLibrary.turn(-1,0);
             sleep(1000);

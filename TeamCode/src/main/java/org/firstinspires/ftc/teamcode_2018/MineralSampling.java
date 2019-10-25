@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -64,7 +64,7 @@ public class MineralSampling extends LinearOpMode {
                 sleep(23000);
                 latchArm.setPower(0);
 
-                drivingLibrary.driveStraight(.65f, 0);
+                drivingLibrary.strafe(.65f, 0);
                 sleep(500);
                 drivingLibrary.brakeStop();
                 sleep(500);
@@ -87,24 +87,24 @@ public class MineralSampling extends LinearOpMode {
                         }
                         if (goldMineralX == -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                             goldPos = 3;
-                            drivingLibrary.driveStraight(0, -.65f);
+                            drivingLibrary.strafe(0, -.65f);
                             sleep(2000);
-                            drivingLibrary.driveStraight(-.65f, 0);
+                            drivingLibrary.strafe(-.65f, 0);
                             sleep(2000);
-                            drivingLibrary.driveStraight(0, -.65f);
+                            drivingLibrary.strafe(0, -.65f);
                             sleep(2000);
                         } else if (goldMineralX != -1 && silverMineral1X != 1) {
                             if (goldMineralX < silverMineral1X) {
                                 goldPos = 1;
-                                drivingLibrary.driveStraight(0, 1);
+                                drivingLibrary.strafe(0, 1);
                                 sleep(2000);
                             } else {
                                 goldPos = 2;
-                                drivingLibrary.driveStraight(0, 1);
+                                drivingLibrary.strafe(0, 1);
                                 sleep(2000);
-                                drivingLibrary.driveStraight(1, 0);
+                                drivingLibrary.strafe(1, 0);
                                 sleep(2000);
-                                drivingLibrary.driveStraight(0, 1);
+                                drivingLibrary.strafe(0, 1);
                                 sleep(2000);
                             }
                         }

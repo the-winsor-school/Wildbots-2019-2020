@@ -46,7 +46,7 @@ public class TestLatchArm extends LinearOpMode {
                 latchArm.setPower(0);
             }
 
-           /* drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+           /* drivingLibrary.strafe(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);*/
 
             telemetry.addData("Status", "Running");

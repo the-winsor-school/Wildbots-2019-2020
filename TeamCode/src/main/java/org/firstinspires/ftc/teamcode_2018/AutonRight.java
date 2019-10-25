@@ -67,7 +67,7 @@ public class AutonRight extends LinearOpMode {
                 sleep(7000);
                 latchArm.setPower(0);
 
-                drivingLibrary.driveStraight(0.75f, 0);
+                drivingLibrary.strafe(0.75f, 0);
                 sleep(500);
                 drivingLibrary.floatStop();
 
@@ -76,7 +76,7 @@ public class AutonRight extends LinearOpMode {
                 sleep(5000);
 
                 //drive backwards
-                drivingLibrary.driveStraight(0, -.75f);
+                drivingLibrary.strafe(0, -.75f);
                 sleep(3000);
                 drivingLibrary.brakeStop();
 
