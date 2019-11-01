@@ -26,7 +26,7 @@ public class MoveAndParkAuton extends LinearOpMode {
         while (opModeIsActive()){
             if (!ranOnce){
                 drivingLibrary.strafe(0,0.5f);
-                sleep(100);
+                sleep(300);
                 drivingLibrary.brakeStop();
             }
             ranOnce = true;
