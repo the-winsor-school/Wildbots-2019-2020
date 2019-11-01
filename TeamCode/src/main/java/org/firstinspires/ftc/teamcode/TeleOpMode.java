@@ -7,7 +7,7 @@ import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp(name  = "TeleOp Mode", group = "Finished")
-public class TeleOpMode2019 extends LinearOpMode {
+public class TeleOpMode extends LinearOpMode {
     //drive train
     DrivingLibrary drivingLibrary;
     int drivingMode;
