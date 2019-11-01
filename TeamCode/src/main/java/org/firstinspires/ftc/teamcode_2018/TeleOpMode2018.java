@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp(name = "TeleOp Mode", group = "Finished")
+@TeleOp(name = "TeleOp Mode 2018", group = "Finished")
 public class TeleOpMode2018 extends LinearOpMode {
 
     // drive train

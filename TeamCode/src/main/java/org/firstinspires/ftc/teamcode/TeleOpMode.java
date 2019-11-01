@@ -13,6 +13,7 @@ public class TeleOpMode extends LinearOpMode {
     int drivingMode;
 
     public void runOpMode() throws InterruptedException {
+        System.out.println("i'm here");
         //set up our driving library
         drivingLibrary = new DrivingLibrary(this);
         drivingLibrary.setSpeed(1);
