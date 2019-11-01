@@ -8,7 +8,7 @@ import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp(name = "TeleOp Mode", group = "Finished")
-public class TeleOpMode extends LinearOpMode {
+public class TeleOpMode2018 extends LinearOpMode {
 
     // drive train
     DrivingLibrary drivingLibrary;
@@ -145,7 +145,7 @@ public class TeleOpMode extends LinearOpMode {
                     holdA = true;
                     holdB = false;
                 }
-
+gi
             } else if (gamepad2.b) {
                 if (holdB) {
                     intakeSpinServo.setPower(0);
