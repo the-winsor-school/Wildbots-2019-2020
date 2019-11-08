@@ -43,7 +43,7 @@ public class TeleOpMode extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
-            
+
 
             //grab arm
 
