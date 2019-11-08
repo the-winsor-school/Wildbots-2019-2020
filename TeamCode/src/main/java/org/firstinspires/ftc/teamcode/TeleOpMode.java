@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
@@ -11,6 +12,9 @@ public class TeleOpMode extends LinearOpMode {
     //drive train
     DrivingLibrary drivingLibrary;
     int drivingMode;
+
+    DcMotor grabArm;
+    Servo baseArm;
 
     public void runOpMode() throws InterruptedException {
         System.out.println("i'm here");
@@ -39,7 +43,58 @@ public class TeleOpMode extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
+
+
+
+            //grab arm
+
+            /*grabArm = hardwareMap.get(DcMotor.class, "grabArm");
+
+            //move grab arm??
+            if (gamepad2.dpad_up){
+                grabArm.setPower(-1);
+            }
+            if (gamepad2.dpad_down){
+                grabArm.setPower(1);
+            }
+            if (gamepad2.dpad_left){
+                grabArm.setPower(0.5);
+            }
+            if (gamepad2.dpad_right){
+                grabArm.setPower(-0.5);
+            }
+            else {
+                grabArm.setPower(0);
+            }
+            */
+
+            // base arm
+            baseArm = hardwareMap.get(Servo.class, "baseArm");
+            double baseArmPos = 0.5;
+
+            //move base arm??
+            if (gamepad1.a){
+                baseArm.setPosition(baseArmPos);
+                baseArmPos += 0.5;
+
+            }
+            if (gamepad1.b){
+                baseArm.setPosition(baseArmPos);
+                baseArmPos -=0.5;
+            }
+
+            else{
+
+
+            }
+            telemetry.addData( "Status:", "Running");
+
             telemetry.update();
+
+
+
+
+
         }
     }
 }
