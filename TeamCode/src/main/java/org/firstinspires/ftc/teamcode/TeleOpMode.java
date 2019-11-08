@@ -43,30 +43,18 @@ public class TeleOpMode extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
-
-
+            
 
             //grab arm
 
-            /*grabArm = hardwareMap.get(DcMotor.class, "grabArm");
+            grabArm = hardwareMap.get(DcMotor.class, "grabArm");
 
-            //move grab arm??
-            if (gamepad2.dpad_up){
-                grabArm.setPower(-1);
+            if (gamepad1.x){
+                grabArm.setPower(0.3);
             }
-            if (gamepad2.dpad_down){
-                grabArm.setPower(1);
+            if (gamepad1.y) {
+                grabArm.setPower(-0.3);
             }
-            if (gamepad2.dpad_left){
-                grabArm.setPower(0.5);
-            }
-            if (gamepad2.dpad_right){
-                grabArm.setPower(-0.5);
-            }
-            else {
-                grabArm.setPower(0);
-            }
-            */
 
             // base arm
             baseArm = hardwareMap.get(Servo.class, "baseArm");
