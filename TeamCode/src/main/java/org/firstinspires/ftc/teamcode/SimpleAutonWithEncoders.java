@@ -24,13 +24,13 @@ public class SimpleAutonWithEncoders extends LinearOpMode {
         boolean ranOnce = false;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENDODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENDODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENDODER);
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENDODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         waitForStart();
 
