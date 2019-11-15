@@ -33,7 +33,6 @@ public class MoveAndDragAuton extends LinearOpMode {
                 drivingLibrary.brakeStop();
                 drivingLibrary.turn(1,0);
                 sleep(500);
-
                 baseArm.setPosition(0.5);
                 drivingLibrary.strafe(0,-0.5f); //go straight
                 sleep(200);
