@@ -32,6 +32,11 @@ public class SimpleAutonWithEncoders extends LinearOpMode {
         leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setTargetPosition(1440);
+        rightFront.setTargetPosition(1440);
+        leftRear.setTargetPosition(1440);
+        rightRear.setTargetPosition(1440);
+
         waitForStart();
 
         while (opModeIsActive()){
