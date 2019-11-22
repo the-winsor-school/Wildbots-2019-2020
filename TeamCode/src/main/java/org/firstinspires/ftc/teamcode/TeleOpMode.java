@@ -45,22 +45,23 @@ public class TeleOpMode extends LinearOpMode {
 
 
 
-            //grab arm
+            //grab arm - the one that holds the bloccs
 
-            /*grabArm = hardwareMap.get(DcMotor.class, "grabArm");
+            grabArm = hardwareMap.get(DcMotor.class, "grabArm");
 
             if (gamepad1.x){
                 grabArm.setPower(0.3);
             }
-            if (gamepad1.y) {
+            else if (gamepad1.y) {
                 grabArm.setPower(-0.3);
-            }*/
+            }
+            else {
+                grabArm.setPower(0);
+            }
 
-            // base arm
+            // base arm - the one that moves the base
             baseArm = hardwareMap.get(CRServo.class, "baseArm");
-            double baseArmPow = 0.5;
 
-            //move base arm??
             if (gamepad1.a){
                 baseArm.setPower(0.5);
 
@@ -70,7 +71,7 @@ public class TeleOpMode extends LinearOpMode {
             }
 
             else{
-
+                baseArm.setPower(0);
 
             }
             telemetry.addData( "Status:", "Running");
