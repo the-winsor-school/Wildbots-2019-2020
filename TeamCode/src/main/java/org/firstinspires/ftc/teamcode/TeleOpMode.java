@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
@@ -14,18 +16,26 @@ public class TeleOpMode extends LinearOpMode {
     int drivingMode;
 
     DcMotor grabArm;
-    CRServo baseArm;
+    DcMotor baseArm;
+    Servo grabHand;
+
+
 
     public void runOpMode() throws InterruptedException {
-        System.out.println("i'm here");
         //set up our driving library
         drivingLibrary = new DrivingLibrary(this);
         drivingLibrary.setSpeed(1);
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
+        grabHand = hardwareMap.get(Servo.class, "grabHand");
+        baseArm = hardwareMap.get(DcMotor.class, "baseArm");
+        grabArm = hardwareMap.get(DcMotor.class, "grabArm");
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        double servoPos = 0.5;
 
         waitForStart();
 
@@ -45,35 +55,48 @@ public class TeleOpMode extends LinearOpMode {
 
 
 
-            //grab arm - the one that holds the bloccs
+            //grab arm - the one that holds the 🅱️loccs
 
-            grabArm = hardwareMap.get(DcMotor.class, "grabArm");
 
-            if (gamepad1.x){
-                grabArm.setPower(0.3);
+
+            if (gamepad2.x) {
+                grabArm.setPower(0.7);
             }
-            else if (gamepad1.y) {
-                grabArm.setPower(-0.3);
+            else if (gamepad2.y) {
+                grabArm.setPower(-0.7);
             }
             else {
                 grabArm.setPower(0);
             }
 
-            // base arm - the one that moves the base
-            baseArm = hardwareMap.get(CRServo.class, "baseArm");
+            // base arm - the one that moves the 🅱️ase
 
-            if (gamepad1.a){
-                baseArm.setPower(0.5);
+
+            if (gamepad2.a) {
+                baseArm.setPower(0.7);
 
             }
-            if (gamepad1.b){
-                baseArm.setPower(-0.5);
+            if (gamepad2.b) {
+                baseArm.setPower(-0.7);
             }
 
             else{
                 baseArm.setPower(0);
 
             }
+
+            if (gamepad2.dpad_left) {
+                servoPos += .001;
+                grabHand.setPosition(servoPos);
+            }
+
+            else if (gamepad2.dpad_right && servoPos >= .05) {
+                servoPos -= .001;
+                grabHand.setPosition(servoPos);
+
+            }
+
+            telemetry.addData("Servo Position: ", servoPos);
             telemetry.addData( "Status:", "Running");
 
             telemetry.update();
