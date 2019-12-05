@@ -92,22 +92,44 @@ public class DrivingLibrary {
         opMode.telemetry.addData("rl", strafeBias[3]);
     }
 
-    public void strafe(float x, float y) {
-        /* inputs are joystick values
-        function includes strafing
+    public void drive(float x, float y, float t) {
+        double vd = vd(x, y);
+        double theta = Math.atan(y/x);
+        double vt = t / 4;
+        leftFront.setPower(vd * Math.sin(theta + Math.PI/4));
+        rightFront.setPower(vd * Math.cos(theta + Math.PI/4));
+        leftRear.setPower(vd * Math.cos(theta + Math.PI/4));
+        rightRear.setPower(vd * Math.sin(theta + Math.PI/4));
+    }
 
-         */
-        float maxSpeed = Math.max(y + x, y - x);
+    public double vd(float x, float y) {
+        double d = Math.sqrt(x*x + y*y);
+        if (d > 1) {
+            d = 1;
+        }
+        return d;
+    }
+
+
+    /**
+     *
+     * @param x joystick.x
+     * @param y joystick.y
+     */
+    public void strafe(float x, float y) {
+
+        float maxSpeed = (float)Math.sqrt(x*x + y*y);
+        //float maxSpeed = Math.max(y + x, y - x);
         double multiplier = 1;
 
         if (maxSpeed > 1) {
             multiplier = 1 / maxSpeed; //values normalised to be less than or equal to one
         }
 
-        leftFront.setPower(multiplier * speedSetting * (y + x) * strafeBias[0]);
+        leftFront.setPower(-multiplier * speedSetting * (y + x) * strafeBias[0]);
         rightFront.setPower(multiplier * speedSetting * (y - x) * strafeBias[1]);
         rightRear.setPower(multiplier * speedSetting * (y + x) * strafeBias[2]);
-        leftRear.setPower(multiplier * speedSetting * (y - x) * strafeBias[3]);
+        leftRear.setPower(-multiplier * speedSetting * (y - x) * strafeBias[3]);
     }
 
     public void turn(float x, float y) {
@@ -123,6 +145,17 @@ public class DrivingLibrary {
         rightFront.setPower((y - x) * speedSetting * multiplier * strafeBias[2]);
         rightRear.setPower((y - x) * speedSetting * multiplier * strafeBias[3]);
     }
+
+    /**public void turn_dpad(boolean left, boolean right) {
+        if (left) {
+            leftFront.setPower(.5 * leftFront.getPower());
+            leftRear.setPower(.5 * leftRear.getPower());
+        }
+        else if (right) {
+            rightFront.setPower(.5 * rightFront.getPower());
+            rightRear.setPower(.5 * rightRear.getPower());
+        }
+    }**/
 
     public void turn(double radians) {
         double k = 1;
