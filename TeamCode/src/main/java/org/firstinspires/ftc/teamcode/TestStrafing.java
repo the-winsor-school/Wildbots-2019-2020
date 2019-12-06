@@ -30,6 +30,7 @@ public class TestStrafing extends LinearOpMode {
             drivingLibrary.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             telemetry.addData("Status", "Running");
+            telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
             telemetry.update();

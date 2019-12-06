@@ -30,6 +30,7 @@ public class DrivingLibrary {
     private DcMotor[] allMotors;
     private HardwareMap hardwareMap;
     private double[] strafeBias;
+    private double[] strafePowers;
 
     // sensor variables
     private BNO055IMU imu; //gyroscope in rev hub
@@ -92,22 +93,45 @@ public class DrivingLibrary {
         opMode.telemetry.addData("rl", strafeBias[3]);
     }
 
+    //strafing on one joystick with twist on the other
     public void drive(float x, float y, float t) {
-        double vd = vd(x, y);
+        double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
         double vt = t / 4;
-        leftFront.setPower(-vd * Math.sin(theta + Math.PI/4));
-        rightFront.setPower(-vd * Math.cos(theta - Math.PI/4));
-        leftRear.setPower(vd * Math.cos(theta - Math.PI/4));
-        rightRear.setPower(vd * Math.sin(theta + Math.PI/4));
+        //in order -- lF, rF, rR, lR
+        strafePowers = new double[] {-vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) + vt,
+                vd * Math.sin(theta + Math.PI/4) + vt, -vd * Math.sin(theta - Math.PI/4) + vt};
+
+        strafeScale(strafePowers);
+
+        leftFront.setPower(strafePowers[0]);
+        rightFront.setPower(strafePowers[1]);
+        rightRear.setPower(strafePowers[2]);
+        leftRear.setPower(strafePowers[3]);
     }
 
-    public double vd(float x, float y) {
+    public double strafeSpeed(float x, float y) {
         double d = Math.sqrt(x*x + y*y);
         if (d > 1) {
             d = 1;
         }
         return d;
+    }
+
+    public double[] strafeScale(double[] strafePowers) {
+        double maxPower = Math.abs(strafePowers[0]);
+        for (int i = 1; i < 4; i++) {
+            if (Math.abs(strafePowers[i]) > maxPower) {
+                maxPower = Math.abs(strafePowers[i]);
+            }
+        }
+        double scale = maxPower;
+        if (scale >= 1) {
+            for (int i = 0; i < 4; i++) {
+                strafePowers[i] /= scale;
+            }
+        }
+        return strafePowers;
     }
 
 
