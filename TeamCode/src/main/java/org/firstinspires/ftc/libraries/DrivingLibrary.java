@@ -94,11 +94,11 @@ public class DrivingLibrary {
 
     public void drive(float x, float y, float t) {
         double vd = vd(x, y);
-        double theta = Math.atan(y/x);
+        double theta = Math.atan2(y, x);
         double vt = t / 4;
-        leftFront.setPower(vd * Math.sin(theta + Math.PI/4));
-        rightFront.setPower(vd * Math.cos(theta + Math.PI/4));
-        leftRear.setPower(vd * Math.cos(theta + Math.PI/4));
+        leftFront.setPower(-vd * Math.sin(theta + Math.PI/4));
+        rightFront.setPower(-vd * Math.cos(theta - Math.PI/4));
+        leftRear.setPower(vd * Math.cos(theta - Math.PI/4));
         rightRear.setPower(vd * Math.sin(theta + Math.PI/4));
     }
 
@@ -145,17 +145,6 @@ public class DrivingLibrary {
         rightFront.setPower((y - x) * speedSetting * multiplier * strafeBias[2]);
         rightRear.setPower((y - x) * speedSetting * multiplier * strafeBias[3]);
     }
-
-    /**public void turn_dpad(boolean left, boolean right) {
-        if (left) {
-            leftFront.setPower(.5 * leftFront.getPower());
-            leftRear.setPower(.5 * leftRear.getPower());
-        }
-        else if (right) {
-            rightFront.setPower(.5 * rightFront.getPower());
-            rightRear.setPower(.5 * rightRear.getPower());
-        }
-    }**/
 
     public void turn(double radians) {
         double k = 1;
