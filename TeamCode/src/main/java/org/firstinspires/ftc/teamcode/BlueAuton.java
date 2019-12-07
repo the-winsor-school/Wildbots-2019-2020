@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+        import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous(name = "Blue Autonomous")
 
@@ -37,25 +37,25 @@ public class BlueAuton extends LinearOpMode {
                 sleep(850);
                 drivingLibrary.brakeStop();
                 sleep(2000);
-                drivingLibrary.drive(-.5f, 0f, 0f);
-                sleep(1250);
+                drivingLibrary.drive(.5f, .05f, 0f);
+                sleep(1000);
                 drivingLibrary.brakeStop();
                 sleep(2000);
-                baseArm.setPower(1);
+                baseArm.setPower(0.5);
                 sleep(2000);
                 drivingLibrary.drive(0f,-.5f, 0f);
                 sleep(5500);
                 drivingLibrary.brakeStop();
                 baseArm.setPower(0);
                 sleep(2000);
-                baseArm.setPower(-1);
+                baseArm.setPower(-0.5);
                 sleep(500);
                 baseArm.setPower(0);
                 sleep(2000);
                 grabArm.setPower(1);
                 sleep(750);
                 grabArm.setPower(0);
-                drivingLibrary.drive(.5f, 0, 0);
+                drivingLibrary.drive(-.5f, 0, 0);
                 sleep(2750);
                 drivingLibrary.brakeStop();
             }
@@ -63,3 +63,4 @@ public class BlueAuton extends LinearOpMode {
         }
     }
 }
+

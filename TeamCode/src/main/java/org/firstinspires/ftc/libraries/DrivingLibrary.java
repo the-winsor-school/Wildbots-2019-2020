@@ -105,7 +105,7 @@ public class DrivingLibrary {
         strafeScale(strafePowers);
 
         leftFront.setPower(-strafePowers[0]);
-        rightFront.setPower(-strafePowers[1]);
+        rightFront.setPower(-1.05*strafePowers[1]);//trying to correct some strafing bias
         rightRear.setPower(strafePowers[2]);
         leftRear.setPower(strafePowers[3]);
     }
