@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 /**
  * Created by lamanwyner on 2/8/19.
  */
-
+@Disabled
 @TeleOp(name = "Test Values for Simple Mineral Sampling", group = "Test")
 public class TestMineralSampling extends LinearOpMode {
     DrivingLibrary drivingLibrary;

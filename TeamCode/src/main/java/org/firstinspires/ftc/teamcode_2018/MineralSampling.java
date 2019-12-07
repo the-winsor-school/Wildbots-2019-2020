@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by lamanwyner on 2/9/19.
  */
-
+@Disabled
 @Autonomous(name = "Simple Mineral Sampling", group = "In Progress")
 public class MineralSampling extends LinearOpMode {
     DrivingLibrary drivingLibrary;

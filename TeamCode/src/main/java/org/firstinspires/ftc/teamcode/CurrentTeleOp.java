@@ -33,7 +33,7 @@ public class CurrentTeleOp extends LinearOpMode {
 
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
         grabHand = hardwareMap.get(Servo.class, "grabHand");
-        dragArm = hardwareMap.get(DcMotor.class, "baseArm");
+        dragArm = hardwareMap.get(DcMotor.class, "dragArm");
 
         waitForStart();
 
@@ -47,8 +47,7 @@ public class CurrentTeleOp extends LinearOpMode {
             }
 
             //strafe
-            drivingLibrary.strafe(gamepad1.left_stick_x, -gamepad1.left_stick_y);
-            drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);
+            drivingLibrary.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
@@ -76,6 +75,8 @@ public class CurrentTeleOp extends LinearOpMode {
             telemetry.addData("Servo position: ", servoPos);
 
             // gamepad 2 a b to flip the drag arm
+
+            //positive values go forwards
             if (gamepad2.a) {
                 dragArm.setPower(1);
             }

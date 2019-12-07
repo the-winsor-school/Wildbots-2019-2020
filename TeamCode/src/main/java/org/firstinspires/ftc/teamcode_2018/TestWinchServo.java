@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode_2018;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Disabled
 @TeleOp (name = "Test Winch Servo Positions for Box", group = "Test")
 public class TestWinchServo extends LinearOpMode {
     Servo flipBox;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Disabled
 @Autonomous(name = "Left - Land and Push Center Mineral", group = "Finished")
 public class AutonLeft extends LinearOpMode {
     DrivingLibrary drivingLibrary;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.libraries.DrivingLibrary;
 /**
  * Created by mreeves on 4/26/19.
  */
+@Disabled
 @Autonomous
 public class ExampleAuton extends LinearOpMode {
 

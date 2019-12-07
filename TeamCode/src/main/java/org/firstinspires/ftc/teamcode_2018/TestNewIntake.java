@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode_2018;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistance;
-
+@Disabled
 @TeleOp(name = "Test Current Intake", group = "Test")
 public class TestNewIntake extends LinearOpMode {
     CRServo spinAxle;

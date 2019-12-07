@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode_2018;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Disabled
 @TeleOp(name = "TeleOp Mode 2018", group = "Finished")
 public class TeleOpMode2018 extends LinearOpMode {
 

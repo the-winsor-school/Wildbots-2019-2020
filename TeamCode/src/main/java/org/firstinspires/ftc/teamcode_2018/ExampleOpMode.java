@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode_2018;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by mreeves on 4/26/19.
  */
-
+@Disabled
 @TeleOp
 public class ExampleOpMode extends LinearOpMode {
     DcMotor motor;

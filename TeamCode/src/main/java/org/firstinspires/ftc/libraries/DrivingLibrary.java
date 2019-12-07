@@ -97,15 +97,15 @@ public class DrivingLibrary {
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
-        double vt = t / 4;
+        double vt = t;
         //in order -- lF, rF, rR, lR
-        strafePowers = new double[] {-vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) + vt,
-                vd * Math.sin(theta + Math.PI/4) + vt, -vd * Math.sin(theta - Math.PI/4) + vt};
+        strafePowers = new double[] {vd * Math.sin(theta + Math.PI/4) - vt, vd * Math.sin(theta - Math.PI/4) + vt,
+                vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) - vt};
 
         strafeScale(strafePowers);
 
-        leftFront.setPower(strafePowers[0]);
-        rightFront.setPower(strafePowers[1]);
+        leftFront.setPower(-strafePowers[0]);
+        rightFront.setPower(-strafePowers[1]);
         rightRear.setPower(strafePowers[2]);
         leftRear.setPower(strafePowers[3]);
     }
