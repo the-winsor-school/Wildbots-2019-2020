@@ -15,7 +15,7 @@ public class CurrentTeleOp extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
-    double servoPos = .1;
+    double servoPos = 0.3; //init servopos
 
     DcMotor grabArm;
     Servo grabHand;
@@ -63,13 +63,16 @@ public class CurrentTeleOp extends LinearOpMode {
                 grabArm.setPower(0);
             }
 
-            // gamepad 2 left right to open/clos\\e the grab hand
+            // gamepad 2 left right to open/close the grab hand
             grabHand.setPosition(servoPos);
             if (gamepad2.dpad_left) {
-                servoPos += .001;
+                servoPos = 1;
             }
             else if (gamepad2.dpad_right && servoPos > 0) {
-                servoPos -= .001;
+                servoPos = 0.25;
+            }
+            else {
+                //servoPos += .001;
             }
 
             telemetry.addData("Servo position: ", servoPos);
