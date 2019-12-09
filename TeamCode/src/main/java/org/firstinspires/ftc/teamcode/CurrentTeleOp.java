@@ -15,7 +15,7 @@ public class CurrentTeleOp extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
-    double servoPos = 0.3; //init servopos
+    double servoPos = 0.3; //init servos
 
     DcMotor grabArm;
     Servo grabHand;
@@ -45,8 +45,12 @@ public class CurrentTeleOp extends LinearOpMode {
                 drivingMode %= DrivingMode.values().length;
                 drivingLibrary.setMode(drivingMode);
             }
-
             //strafe
+
+            if (gamepad1.y) {
+                drivingLibrary.setSpeed(.75);
+            }
+
             drivingLibrary.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             telemetry.addData("Status", "Running");

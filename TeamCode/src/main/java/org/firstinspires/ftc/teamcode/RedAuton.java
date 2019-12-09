@@ -56,7 +56,7 @@ public class RedAuton extends LinearOpMode {
                 sleep(750);
                 grabArm.setPower(0);
                 drivingLibrary.drive(.5f, 0, 0);
-                sleep(2750);
+                sleep(2850);
                 drivingLibrary.brakeStop();
             }
             ranOnce = true;

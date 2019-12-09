@@ -97,17 +97,26 @@ public class DrivingLibrary {
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
+        if (Math.abs(x) <= 0.05) { //dead zone start
+            x = 0;
+        }
+        if (Math.abs(y) <= 0.05) {
+            y = 0;
+        }
+        if (Math.abs(t) <= 0.05) {
+            t = 0;
+        } //dead zone end
         double vt = t;
         //in order -- lF, rF, rR, lR
-        strafePowers = new double[] {vd * Math.sin(theta + Math.PI/4) - vt, vd * Math.sin(theta - Math.PI/4) + vt,
-                vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) - vt};
+        strafePowers = new double[] {vd * Math.sin(theta + Math.PI/4) - vt, 1.05 * vd * Math.sin(theta - Math.PI/4) + vt,
+                vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) - vt};//trying to correct some strafing bias
 
         strafeScale(strafePowers);
 
-        leftFront.setPower(-strafePowers[0]);
-        rightFront.setPower(-1.05*strafePowers[1]);//trying to correct some strafing bias
-        rightRear.setPower(strafePowers[2]);
-        leftRear.setPower(strafePowers[3]);
+        leftFront.setPower(-strafePowers[0] * speedSetting);
+        rightFront.setPower(-strafePowers[1] * speedSetting);
+        rightRear.setPower(strafePowers[2] * speedSetting);
+        leftRear.setPower(strafePowers[3] * speedSetting);
     }
 
     public double strafeSpeed(float x, float y) {
