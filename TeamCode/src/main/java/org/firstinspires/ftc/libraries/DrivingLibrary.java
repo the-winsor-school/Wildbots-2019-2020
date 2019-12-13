@@ -122,9 +122,42 @@ public class DrivingLibrary {
                 vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
         };
 
+
+
         strafeScale(strafePowers);
 
         leftFront.setPower(-strafePowers[0] * speedSetting);
+        rightFront.setPower(-strafePowers[1] * speedSetting);
+        rightRear.setPower(strafePowers[2] * speedSetting);
+        leftRear.setPower(strafePowers[3] * speedSetting);
+    }
+
+    public void bevelDrive(float x, float y, float t) {
+        double vd = strafeSpeed(x, y);
+        double theta = Math.atan2(y, x);
+        /*if (Math.abs(x) <= 0.05) { //dead zone start
+            x = 0;
+        }
+        if (Math.abs(y) <= 0.05) {
+            y = 0;
+        }
+        if (Math.abs(t) <= 0.05) {
+            t = 0;
+        } //dead zone end*/
+        double vt = t;
+        //in order -- lF, rF, rR, lR
+        strafePowers = new double[] {
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[1] + vt,
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[2] + vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
+        };
+
+
+
+        strafeScale(strafePowers);
+
+        leftFront.setPower(strafePowers[0] * speedSetting);
         rightFront.setPower(-strafePowers[1] * speedSetting);
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);

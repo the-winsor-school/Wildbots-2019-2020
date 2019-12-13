@@ -71,7 +71,7 @@ public class CurrentTeleOp extends LinearOpMode {
 
             // gamepad 2 left right to open/close the grab hand
             grabHand.setPosition(servoPos);
-            if (gamepad2.y) {
+            if (gamepad2.y && servoPos < 1) {
                 servoPos +=.01 ;
             }
             else if (gamepad2.x && servoPos > 0) {
