@@ -81,16 +81,23 @@ public class DrivingLibrary {
     }
 
     //for incrementally changing strafe bias for testing
+    //wheel 0 front left, wheel 1 front right, wheel 2 rear right, wheel 3 rear left
+
+    //speed is relative to other wheels - > 1 will make it faster, <1 will make it slower
+    public void setStrafeBias(int wheel, double speed) {
+        strafeBias[wheel] = speed;
+    }
+
     public void updateStrafeBias(int wheel, int multiplier) {
         strafeBias[wheel] += (.01 * multiplier);
     }
 
     //displays strafe bias on phone
     public void printStrafeBias() {
-        opMode.telemetry.addData("fl", strafeBias[0]);
-        opMode.telemetry.addData("fr", strafeBias[1]);
-        opMode.telemetry.addData("rr", strafeBias[2]);
-        opMode.telemetry.addData("rl", strafeBias[3]);
+        opMode.telemetry.addData("front left", strafeBias[0]);
+        opMode.telemetry.addData("front right", strafeBias[1]);
+        opMode.telemetry.addData("rear right", strafeBias[2]);
+        opMode.telemetry.addData("rear left", strafeBias[3]);
     }
 
     //strafing on one joystick with twist on the other
@@ -108,8 +115,12 @@ public class DrivingLibrary {
         } //dead zone end
         double vt = t;
         //in order -- lF, rF, rR, lR
-        strafePowers = new double[] {vd * Math.sin(theta + Math.PI/4) - vt, 1.05 * vd * Math.sin(theta - Math.PI/4) + vt,
-                vd * Math.sin(theta + Math.PI/4) + vt, vd * Math.sin(theta - Math.PI/4) - vt};//trying to correct some strafing bias
+        strafePowers = new double[] {
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[1] + vt,
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[2] + vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
+        };
 
         strafeScale(strafePowers);
 
@@ -119,6 +130,7 @@ public class DrivingLibrary {
         leftRear.setPower(strafePowers[3] * speedSetting);
     }
 
+    //gets speed for strafing
     public double strafeSpeed(float x, float y) {
         double d = Math.sqrt(x*x + y*y);
         if (d > 1) {
@@ -127,6 +139,7 @@ public class DrivingLibrary {
         return d;
     }
 
+    //scales strafing values so all motor powers are between -1 and 1
     public double[] strafeScale(double[] strafePowers) {
         double maxPower = Math.abs(strafePowers[0]);
         for (int i = 1; i < 4; i++) {

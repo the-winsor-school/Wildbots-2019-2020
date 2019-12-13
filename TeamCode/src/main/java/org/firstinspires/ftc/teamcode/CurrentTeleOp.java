@@ -27,6 +27,8 @@ public class CurrentTeleOp extends LinearOpMode {
         drivingLibrary.setSpeed(1);
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
+        //adjusting strafe bias because FR wheel moves slower
+        drivingLibrary.setStrafeBias(1, 1.05);
 
         telemetry.addData("Status: ", "Initialized");
         telemetry.update();
