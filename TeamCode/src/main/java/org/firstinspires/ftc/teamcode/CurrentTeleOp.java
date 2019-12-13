@@ -50,7 +50,7 @@ public class CurrentTeleOp extends LinearOpMode {
             //strafe
 
             if (gamepad1.y) {
-                drivingLibrary.setSpeed(.75);
+                drivingLibrary.setSpeed(.5);
             }
 
             drivingLibrary.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -71,14 +71,11 @@ public class CurrentTeleOp extends LinearOpMode {
 
             // gamepad 2 left right to open/close the grab hand
             grabHand.setPosition(servoPos);
-            if (gamepad2.dpad_left) {
-                servoPos = 1;
+            if (gamepad2.y) {
+                servoPos +=.01 ;
             }
-            else if (gamepad2.dpad_right && servoPos > 0) {
-                servoPos = 0.25;
-            }
-            else {
-                //servoPos += .001;
+            else if (gamepad2.x && servoPos > 0) {
+                servoPos -= .01;
             }
 
             telemetry.addData("Servo position: ", servoPos);
