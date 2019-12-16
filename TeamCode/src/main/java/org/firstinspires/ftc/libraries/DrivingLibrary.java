@@ -104,15 +104,6 @@ public class DrivingLibrary {
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
-        if (Math.abs(x) <= 0.05) { //dead zone start
-            x = 0;
-        }
-        if (Math.abs(y) <= 0.05) {
-            y = 0;
-        }
-        if (Math.abs(t) <= 0.05) {
-            t = 0;
-        } //dead zone end
         double vt = t;
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
@@ -135,15 +126,6 @@ public class DrivingLibrary {
     public void bevelDrive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
-        /*if (Math.abs(x) <= 0.05) { //dead zone start
-            x = 0;
-        }
-        if (Math.abs(y) <= 0.05) {
-            y = 0;
-        }
-        if (Math.abs(t) <= 0.05) {
-            t = 0;
-        } //dead zone end*/
         double vt = t;
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
