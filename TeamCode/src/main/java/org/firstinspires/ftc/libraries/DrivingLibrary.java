@@ -31,6 +31,7 @@ public class DrivingLibrary {
     private HardwareMap hardwareMap;
     private double[] strafeBias;
     private double[] strafePowers;
+    private double[] encoderValues;
 
     // sensor variables
     private BNO055IMU imu; //gyroscope in rev hub
@@ -78,6 +79,7 @@ public class DrivingLibrary {
         imu.initialize(parameters);
 
         strafeBias = new double[] {1, 1, 1, 1};
+        encoderValues = new double[] {0, 0, 0, 0};
     }
 
     //for incrementally changing strafe bias for testing
@@ -94,10 +96,10 @@ public class DrivingLibrary {
 
     //displays strafe bias on phone
     public void printStrafeBias() {
-        opMode.telemetry.addData("front left", strafeBias[0]);
-        opMode.telemetry.addData("front right", strafeBias[1]);
-        opMode.telemetry.addData("rear right", strafeBias[2]);
-        opMode.telemetry.addData("rear left", strafeBias[3]);
+        opMode.telemetry.addData("front left strafe bias", strafeBias[0]);
+        opMode.telemetry.addData("front right strafe bias", strafeBias[1]);
+        opMode.telemetry.addData("rear right strafe bias", strafeBias[2]);
+        opMode.telemetry.addData("rear left strafe bias", strafeBias[3]);
     }
 
     //strafing on one joystick with twist on the other
@@ -123,6 +125,7 @@ public class DrivingLibrary {
         leftRear.setPower(strafePowers[3] * speedSetting);
     }
 
+    //essentially the same as regular driving but different wheels are reversed
     public void bevelDrive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
@@ -289,9 +292,23 @@ public class DrivingLibrary {
         }
     }
 
-    private void resetEncoders() {
+    public void resetEncoderValues() {
         for (DcMotor motor : allMotors) {
             if (motor != null) motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+    }
+
+    public void printEncoderValues() {
+        getEncoderValues();
+        opMode.telemetry.addData("front left encoder", encoderValues[0]);
+        opMode.telemetry.addData("front right encoder", encoderValues[1]);
+        opMode.telemetry.addData("rear right encoder", encoderValues[2]);
+        opMode.telemetry.addData("rear left encoder", encoderValues[3]);
+    }
+
+    public void getEncoderValues() {
+        for (int i = 0; i < 4; i++) {
+            encoderValues[i] = allMotors[i].getCurrentPosition();
         }
     }
 }
