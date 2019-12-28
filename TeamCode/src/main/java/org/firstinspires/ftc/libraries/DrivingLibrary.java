@@ -31,7 +31,7 @@ public class DrivingLibrary {
     private HardwareMap hardwareMap;
     private double[] strafeBias;
     private double[] strafePowers;
-    private double[] encoderValues;
+    private int[] encoderValues;
 
     // sensor variables
     private BNO055IMU imu; //gyroscope in rev hub
@@ -42,6 +42,9 @@ public class DrivingLibrary {
     private double speedSetting; //sets max speed
     private DrivingMode drivingMode;
     private OpMode opMode;
+    private double theta;
+    private double strafeError;
+    private double targetAngle;
 
     public DrivingLibrary(OpMode opMode) {
         /* library for functions related to drive train
@@ -79,7 +82,9 @@ public class DrivingLibrary {
         imu.initialize(parameters);
 
         strafeBias = new double[] {1, 1, 1, 1};
-        encoderValues = new double[] {0, 0, 0, 0};
+        encoderValues = new int[] {0, 0, 0, 0};
+
+        targetAngle = getIMUAngle();
     }
 
     //for incrementally changing strafe bias for testing
@@ -105,7 +110,7 @@ public class DrivingLibrary {
     //strafing on one joystick with twist on the other
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
-        double theta = Math.atan2(y, x);
+        theta = Math.atan2(y, x);
         double vt = t;
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
@@ -123,13 +128,29 @@ public class DrivingLibrary {
         rightFront.setPower(-strafePowers[1] * speedSetting);
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
+
     }
 
     //essentially the same as regular driving but different wheels are reversed
     public void bevelDrive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
-        double theta = Math.atan2(y, x);
+        theta = Math.atan2(y, x);
         double vt = t;
+
+        if (vt == 0) {
+            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
+                if (getIMUAngle() > 0) {
+                    vt -= .1;
+                }
+                else {
+                    vt += .1;
+                }
+            }
+        }
+        else {
+            targetAngle = getIMUAngle();
+        }
+
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
                 vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
@@ -138,7 +159,50 @@ public class DrivingLibrary {
                 vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
         };
 
+        strafeScale(strafePowers);
 
+        leftFront.setPower(strafePowers[0] * speedSetting);
+        rightFront.setPower(-strafePowers[1] * speedSetting);
+        rightRear.setPower(strafePowers[2] * speedSetting);
+        leftRear.setPower(strafePowers[3] * speedSetting);
+
+        opMode.telemetry.addData("intended angle", targetAngle);
+        opMode.telemetry.addData("actual angle", getIMUAngle());
+    }
+
+    //strafe but with an intended strafing angle, a speed, and an intended robot angle
+    //all angles are in radians!!
+    public void bevelDrive(double driveAngle, double speed, double robotAngle) {
+        double vd = speed;
+        double theta = driveAngle - getIMUAngle() + Math.PI / 2;
+        double vt = robotAngle - getIMUAngle();
+
+        if (vt < .1) {
+            vt = 0;
+        }
+
+        if (vt == 0) {
+            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
+                if (getIMUAngle() > 0) {
+                    vt -= .1;
+                }
+                else {
+                    vt += .1;
+                }
+            }
+        }
+
+        else {
+            targetAngle = getIMUAngle();
+        }
+
+        //in order -- lF, rF, rR, lR
+        strafePowers = new double[] {
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[1] + vt,
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[2] + vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
+        };
 
         strafeScale(strafePowers);
 
@@ -146,6 +210,8 @@ public class DrivingLibrary {
         rightFront.setPower(-strafePowers[1] * speedSetting);
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
+        opMode.telemetry.addData("strafing angle", theta);
+        opMode.telemetry.update();
     }
 
     //gets speed for strafing
@@ -295,6 +361,7 @@ public class DrivingLibrary {
     public void resetEncoderValues() {
         for (DcMotor motor : allMotors) {
             if (motor != null) motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 
@@ -306,9 +373,19 @@ public class DrivingLibrary {
         opMode.telemetry.addData("rear left encoder", encoderValues[3]);
     }
 
-    public void getEncoderValues() {
+    public int[] getEncoderValues() {
         for (int i = 0; i < 4; i++) {
             encoderValues[i] = allMotors[i].getCurrentPosition();
         }
+        return encoderValues;
+    }
+
+    public double getIMUAngle() {
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        return angles.firstAngle;
+    }
+
+    public double getStrafeAngle() {
+        return theta;
     }
 }
