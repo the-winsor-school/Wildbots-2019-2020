@@ -112,6 +112,18 @@ public class DrivingLibrary {
         double vd = strafeSpeed(x, y);
         theta = Math.atan2(y, x);
         double vt = t;
+
+        if (vt == 0) {
+            if (Math.abs(getIMUAngle() - targetAngle) >= .2) {
+                if (getIMUAngle() > 0) {
+                    vt -= .25;
+                }
+                else {
+                    vt += .25;
+                }
+            }
+        }
+
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
                 vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
@@ -129,6 +141,22 @@ public class DrivingLibrary {
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
 
+        if (vt != 0) {
+            targetAngle = getIMUAngle();
+        }
+    }
+
+    public void spinToAngle(double angle) {
+        double goalAngle = getIMUAngle() + angle;
+        while (Math.abs(angle - getIMUAngle()) > .1) {
+            if (goalAngle > getIMUAngle()) {
+                drive(0, 0, -.25f);
+            }
+            else {
+                drive(0, 0, .25f);
+            }
+        }
+        targetAngle = getIMUAngle();
     }
 
     //essentially the same as regular driving but different wheels are reversed
@@ -137,19 +165,19 @@ public class DrivingLibrary {
         theta = Math.atan2(y, x);
         double vt = t;
 
-        if (vt == 0) {
-            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
-                if (getIMUAngle() > 0) {
-                    vt -= .1;
-                }
-                else {
-                    vt += .1;
+            if (vt == 0) {
+                if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
+                    if (getIMUAngle() > 0) {
+                        vt -= .1;
+                    }
+                    else {
+                        vt += .1;
+                    }
                 }
             }
-        }
-        else {
-            targetAngle = getIMUAngle();
-        }
+            else {
+                targetAngle = getIMUAngle();
+            }
 
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
@@ -166,12 +194,14 @@ public class DrivingLibrary {
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
 
-        opMode.telemetry.addData("intended angle", targetAngle);
-        opMode.telemetry.addData("actual angle", getIMUAngle());
+        if (vt != 0) {
+            targetAngle = getIMUAngle();
+        }
     }
 
     //strafe but with an intended strafing angle, a speed, and an intended robot angle
-    //all angles are in radians!!
+    //dont use this yet im not sure if it works or not but i think it turns then strafes
+    //i couldnt tell you why though
     public void bevelDrive(double driveAngle, double speed, double robotAngle) {
         double vd = speed;
         double theta = driveAngle - getIMUAngle() + Math.PI / 2;
