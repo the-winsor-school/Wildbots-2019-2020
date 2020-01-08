@@ -90,7 +90,7 @@ public class DrivingLibrary {
     //for incrementally changing strafe bias for testing
     //wheel 0 front left, wheel 1 front right, wheel 2 rear right, wheel 3 rear left
 
-    //speed is relative to other wheels - > 1 will make it faster, <1 will make it slower
+    //speed is relative to other wheels - >1 will make it faster, <1 will make it slower
     public void setStrafeBias(int wheel, double speed) {
         strafeBias[wheel] = speed;
     }
@@ -113,15 +113,19 @@ public class DrivingLibrary {
         theta = Math.atan2(y, x);
         double vt = t;
 
+
         if (vt == 0) {
-            if (Math.abs(getIMUAngle() - targetAngle) >= .2) {
+            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
                 if (getIMUAngle() > 0) {
-                    vt -= .25;
+                    vt += .1;
                 }
                 else {
-                    vt += .25;
+                    vt -= .1;
                 }
             }
+        }
+        else {
+            targetAngle = getIMUAngle();
         }
 
         //in order -- lF, rF, rR, lR
@@ -156,10 +160,11 @@ public class DrivingLibrary {
                 drive(0, 0, .25f);
             }
         }
+        brakeStop();
         targetAngle = getIMUAngle();
     }
 
-    //essentially the same as regular driving but different wheels are reversed
+    //essentially the same as regular driving but diffIs joystick one wise to his joystickerent wheels are reversed
     public void bevelDrive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         theta = Math.atan2(y, x);
@@ -197,51 +202,6 @@ public class DrivingLibrary {
         if (vt != 0) {
             targetAngle = getIMUAngle();
         }
-    }
-
-    //strafe but with an intended strafing angle, a speed, and an intended robot angle
-    //dont use this yet im not sure if it works or not but i think it turns then strafes
-    //i couldnt tell you why though
-    public void bevelDrive(double driveAngle, double speed, double robotAngle) {
-        double vd = speed;
-        double theta = driveAngle - getIMUAngle() + Math.PI / 2;
-        double vt = robotAngle - getIMUAngle();
-
-        if (vt < .1) {
-            vt = 0;
-        }
-
-        if (vt == 0) {
-            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
-                if (getIMUAngle() > 0) {
-                    vt -= .1;
-                }
-                else {
-                    vt += .1;
-                }
-            }
-        }
-
-        else {
-            targetAngle = getIMUAngle();
-        }
-
-        //in order -- lF, rF, rR, lR
-        strafePowers = new double[] {
-                vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
-                vd * Math.sin(theta - Math.PI/4) * strafeBias[1] + vt,
-                vd * Math.sin(theta + Math.PI/4) * strafeBias[2] + vt,
-                vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
-        };
-
-        strafeScale(strafePowers);
-
-        leftFront.setPower(strafePowers[0] * speedSetting);
-        rightFront.setPower(-strafePowers[1] * speedSetting);
-        rightRear.setPower(strafePowers[2] * speedSetting);
-        leftRear.setPower(strafePowers[3] * speedSetting);
-        opMode.telemetry.addData("strafing angle", theta);
-        opMode.telemetry.update();
     }
 
     //gets speed for strafing

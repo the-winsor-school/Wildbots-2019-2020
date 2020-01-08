@@ -76,6 +76,7 @@ public class AutonTesting extends LinearOpMode {
                     stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
                 }
                 drivingLibrary.brakeStop();
+
                 sleep(500);
                 stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
                 telemetry.addData("ending distance", stoneDist);
@@ -94,14 +95,27 @@ public class AutonTesting extends LinearOpMode {
                 //flip arm, grab block
                 grabHand.setPosition(.7);
                 grabArm.setPower(-1);
-                sleep(4000);
+                    sleep(5000);
                 grabArm.setPower(0);
                 grabHand.setPosition(0);
+                grabArm.setPower(1);
+                sleep(500);
+                grabArm.setPower(0);
                 drivingLibrary.drive(0, .5f, 0);
                 sleep(350);
                 drivingLibrary.brakeStop();
-                drivingLibrary.drive(1,0, 0);
-                sleep(3000); // way too far - fix this later
+                drivingLibrary.spinToAngle(Math.PI/2 - .1);
+                drivingLibrary.drive(0, -1, 0);
+                sleep(1500);
+                drivingLibrary.brakeStop();
+                drivingLibrary.spinToAngle(-Math.PI/2 + .1);
+                grabArm.setPower(1);
+                sleep(1000);
+                grabArm.setPower(0);
+                drivingLibrary.drive(0, .5f, 0);
+                sleep(100);
+                drivingLibrary.brakeStop();
+                grabHand.setPosition(.7);
 
                 //outline for the remainder of autonomous
                 /*double foundationDist = this.foundationDistSensor.getDistance(DistanceUnit.CM);
