@@ -19,6 +19,7 @@ public class TestStrafing extends LinearOpMode {
         drivingLibrary.setSpeed(1);
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
+        float addToTurn = 0;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -27,12 +28,20 @@ public class TestStrafing extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            drivingLibrary.bevelDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, -gamepad1.right_stick_x);
+            if(gamepad1.b) {
+                drivingLibrary.resetEncoderValues();
+            }
 
+            //drivingLibrary.bevelDrive(Math.PI / 2, .5, Math.PI / 2);
+
+            /**if (gamepad1.y) {
+                drivingLibrary.brakeStop();
+            }**/
+
+            drivingLibrary.bevelDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, -gamepad1.right_stick_x);
             telemetry.addData("Status", "Running");
             telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
-            telemetry.addData("Brake Mode", drivingLibrary.getMode());
-
+            telemetry.addData("strafing angle", drivingLibrary.getStrafeAngle());
             telemetry.update();
         }
     }

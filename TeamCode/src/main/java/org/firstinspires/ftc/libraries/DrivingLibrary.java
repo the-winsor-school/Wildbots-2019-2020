@@ -31,6 +31,7 @@ public class DrivingLibrary {
     private HardwareMap hardwareMap;
     private double[] strafeBias;
     private double[] strafePowers;
+    private int[] encoderValues;
 
     // sensor variables
     private BNO055IMU imu; //gyroscope in rev hub
@@ -41,6 +42,9 @@ public class DrivingLibrary {
     private double speedSetting; //sets max speed
     private DrivingMode drivingMode;
     private OpMode opMode;
+    private double theta;
+    private double strafeError;
+    private double targetAngle;
 
     public DrivingLibrary(OpMode opMode) {
         /* library for functions related to drive train
@@ -78,12 +82,15 @@ public class DrivingLibrary {
         imu.initialize(parameters);
 
         strafeBias = new double[] {1, 1, 1, 1};
+        encoderValues = new int[] {0, 0, 0, 0};
+
+        targetAngle = getIMUAngle();
     }
 
     //for incrementally changing strafe bias for testing
     //wheel 0 front left, wheel 1 front right, wheel 2 rear right, wheel 3 rear left
 
-    //speed is relative to other wheels - > 1 will make it faster, <1 will make it slower
+    //speed is relative to other wheels - >1 will make it faster, <1 will make it slower
     public void setStrafeBias(int wheel, double speed) {
         strafeBias[wheel] = speed;
     }
@@ -94,26 +101,39 @@ public class DrivingLibrary {
 
     //displays strafe bias on phone
     public void printStrafeBias() {
-        opMode.telemetry.addData("front left", strafeBias[0]);
-        opMode.telemetry.addData("front right", strafeBias[1]);
-        opMode.telemetry.addData("rear right", strafeBias[2]);
-        opMode.telemetry.addData("rear left", strafeBias[3]);
+        opMode.telemetry.addData("front left strafe bias", strafeBias[0]);
+        opMode.telemetry.addData("front right strafe bias", strafeBias[1]);
+        opMode.telemetry.addData("rear right strafe bias", strafeBias[2]);
+        opMode.telemetry.addData("rear left strafe bias", strafeBias[3]);
     }
 
     //strafing on one joystick with twist on the other
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
+<<<<<<< HEAD
         double theta = Math.atan2(y, x);
         if (Math.abs(x) <= 0.05           ) { //dead zone start
             x = 0;
-        }
-        if (Math.abs(y) <= 0.05) {
-            y = 0;
-        }
-        if (Math.abs(t) <= 0.05) {
-            t = 0;
-        } //dead zone end
+=======
+        theta = Math.atan2(y, x);
         double vt = t;
+
+
+        if (vt == 0) {
+            if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
+                if (getIMUAngle() > 0) {
+                    vt += .1;
+                }
+                else {
+                    vt -= .1;
+                }
+            }
+>>>>>>> 1174f3a686ddd19be59f7b856f2ed62ebb675bce
+        }
+        else {
+            targetAngle = getIMUAngle();
+        }
+
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
                 vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
@@ -130,21 +150,46 @@ public class DrivingLibrary {
         rightFront.setPower(-strafePowers[1] * speedSetting);
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
+
+        if (vt != 0) {
+            targetAngle = getIMUAngle();
+        }
     }
 
+    public void spinToAngle(double angle) {
+        double goalAngle = getIMUAngle() + angle;
+        while (Math.abs(angle - getIMUAngle()) > .1) {
+            if (goalAngle > getIMUAngle()) {
+                drive(0, 0, -.25f);
+            }
+            else {
+                drive(0, 0, .25f);
+            }
+        }
+        brakeStop();
+        targetAngle = getIMUAngle();
+    }
+
+    //essentially the same as regular driving but diffIs joystick one wise to his joystickerent wheels are reversed
     public void bevelDrive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
-        double theta = Math.atan2(y, x);
-        /*if (Math.abs(x) <= 0.05) { //dead zone start
-            x = 0;
-        }
-        if (Math.abs(y) <= 0.05) {
-            y = 0;
-        }
-        if (Math.abs(t) <= 0.05) {
-            t = 0;
-        } //dead zone end*/
+        theta = Math.atan2(y, x);
         double vt = t;
+
+            if (vt == 0) {
+                if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
+                    if (getIMUAngle() > 0) {
+                        vt -= .1;
+                    }
+                    else {
+                        vt += .1;
+                    }
+                }
+            }
+            else {
+                targetAngle = getIMUAngle();
+            }
+
         //in order -- lF, rF, rR, lR
         strafePowers = new double[] {
                 vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
@@ -153,14 +198,16 @@ public class DrivingLibrary {
                 vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
         };
 
-
-
         strafeScale(strafePowers);
 
         leftFront.setPower(strafePowers[0] * speedSetting);
         rightFront.setPower(-strafePowers[1] * speedSetting);
         rightRear.setPower(strafePowers[2] * speedSetting);
         leftRear.setPower(strafePowers[3] * speedSetting);
+
+        if (vt != 0) {
+            targetAngle = getIMUAngle();
+        }
     }
 
     //gets speed for strafing
@@ -307,9 +354,34 @@ public class DrivingLibrary {
         }
     }
 
-    private void resetEncoders() {
+    public void resetEncoderValues() {
         for (DcMotor motor : allMotors) {
             if (motor != null) motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+    }
+
+    public void printEncoderValues() {
+        getEncoderValues();
+        opMode.telemetry.addData("front left encoder", encoderValues[0]);
+        opMode.telemetry.addData("front right encoder", encoderValues[1]);
+        opMode.telemetry.addData("rear right encoder", encoderValues[2]);
+        opMode.telemetry.addData("rear left encoder", encoderValues[3]);
+    }
+
+    public int[] getEncoderValues() {
+        for (int i = 0; i < 4; i++) {
+            encoderValues[i] = allMotors[i].getCurrentPosition();
+        }
+        return encoderValues;
+    }
+
+    public double getIMUAngle() {
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        return angles.firstAngle;
+    }
+
+    public double getStrafeAngle() {
+        return theta;
     }
 }

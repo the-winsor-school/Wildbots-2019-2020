@@ -28,7 +28,6 @@ public class CurrentTeleOp extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
         //adjusting strafe bias because FR wheel moves slower
-        drivingLibrary.setStrafeBias(1, 1.05);
 
         telemetry.addData("Status: ", "Initialized");
         telemetry.update();
@@ -72,10 +71,10 @@ public class CurrentTeleOp extends LinearOpMode {
             // gamepad 2 left right to open/close the grab hand
             grabHand.setPosition(servoPos);
             if (gamepad2.y && servoPos < 1) {
-                servoPos +=.01 ;
+                servoPos +=.1;
             }
             else if (gamepad2.x && servoPos > 0) {
-                servoPos -= .01;
+                servoPos -= .1;
             }
 
             telemetry.addData("Servo position: ", servoPos);
@@ -93,6 +92,7 @@ public class CurrentTeleOp extends LinearOpMode {
                 dragArm.setPower(0);
             }
 
+            telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
             telemetry.update();
 
         }
