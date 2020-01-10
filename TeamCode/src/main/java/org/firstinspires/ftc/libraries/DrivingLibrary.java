@@ -104,7 +104,7 @@ public class DrivingLibrary {
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         double theta = Math.atan2(y, x);
-        if (Math.abs(x) <= 0.05) { //dead zone start
+        if (Math.abs(x) <= 0.05           ) { //dead zone start
             x = 0;
         }
         if (Math.abs(y) <= 0.05) {
