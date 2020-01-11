@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp(name = "Current TeleOp", group = "Testing")
+@TeleOp(name = "Current TeleOp")
 public class CurrentTeleOp extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;

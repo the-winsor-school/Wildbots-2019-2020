@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.util.ElapsedTime;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+        import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "Red Autonomous")
+@Autonomous(name = "Blue: Drag, Park")
 
-public class RedAuton extends LinearOpMode {
+public class BlueDragPark extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
     DcMotor baseArm;
@@ -39,8 +37,8 @@ public class RedAuton extends LinearOpMode {
                 sleep(850);
                 drivingLibrary.brakeStop();
                 sleep(2000);
-                drivingLibrary.drive(-.5f, 0f, 0f);
-                sleep(1250);
+                drivingLibrary.drive(.5f, .05f, 0f);
+                sleep(1000);
                 drivingLibrary.brakeStop();
                 sleep(2000);
                 baseArm.setPower(0.5);
@@ -57,7 +55,7 @@ public class RedAuton extends LinearOpMode {
                 grabArm.setPower(1);
                 sleep(750);
                 grabArm.setPower(0);
-                drivingLibrary.drive(.5f, 0, 0);
+                drivingLibrary.drive(-.5f, 0, 0);
                 sleep(2850);
                 drivingLibrary.brakeStop();
             }
@@ -65,3 +63,4 @@ public class RedAuton extends LinearOpMode {
         }
     }
 }
+

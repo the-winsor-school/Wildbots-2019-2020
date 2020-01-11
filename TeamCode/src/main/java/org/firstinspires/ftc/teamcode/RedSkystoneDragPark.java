@@ -13,8 +13,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-@Autonomous(name = "Auton Testing", group = "testing")
-public class AutonTesting extends LinearOpMode {
+@Autonomous(name = "Red: Skystone, Drag, Park")
+public class RedSkystoneDragPark extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
     int drivingMode;
@@ -28,7 +28,6 @@ public class AutonTesting extends LinearOpMode {
     OpenCVTestTwo.StageSwitchingPipeline stageSwitchingPipeline;
 
     Rev2mDistanceSensor stoneDistSensor;
-    Rev2mDistanceSensor foundationDistSensor;
 
     String identity;
 
@@ -42,7 +41,6 @@ public class AutonTesting extends LinearOpMode {
         drivingLibrary.setMode(drivingMode);
 
         stoneDistSensor = hardwareMap.get(Rev2mDistanceSensor.class, "stoneDistanceSensor");
-        foundationDistSensor = hardwareMap.get(Rev2mDistanceSensor.class, "foundationDistanceSensor");
 
         dragArm = hardwareMap.get(DcMotor.class, "dragArm");
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
@@ -101,45 +99,64 @@ public class AutonTesting extends LinearOpMode {
                 grabArm.setPower(1);
                 sleep(500);
                 grabArm.setPower(0);
+                //drive back a bit
                 drivingLibrary.drive(0, .5f, 0);
                 sleep(350);
                 drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI/2 - .1);
+                //turn, then drive forwards to foundation, then turn back
+                drivingLibrary.spinToAngle(Math.PI/2 - .15);
                 drivingLibrary.drive(0, -1, 0);
-                sleep(1500);
+                sleep(1750);
                 drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(-Math.PI/2 + .1);
+                drivingLibrary.spinToAngle(0);
+                //raise arm a bit, then drive forward
+                grabArm.setPower(1);
+                sleep(1000);
+                grabArm.setPower(0);
+                drivingLibrary.drive(0, -.5f, 0);
+                sleep(550);
+                drivingLibrary.brakeStop();
+                //lower arm, release stone
+                grabArm.setPower(-1);
+                sleep(1000);
+                grabArm.setPower(0);
+                grabHand.setPosition(.7);
+                //raise arm a bit
                 grabArm.setPower(1);
                 sleep(1000);
                 grabArm.setPower(0);
                 drivingLibrary.drive(0, .5f, 0);
-                sleep(100);
+                sleep(350);
                 drivingLibrary.brakeStop();
-                grabHand.setPosition(.7);
-
-                //outline for the remainder of autonomous
-                /*double foundationDist = this.foundationDistSensor.getDistance(DistanceUnit.CM);
-                while (foundationDist > 45) {
-                    drivingLibrary.drive(.5f, 0, 0);
-                    foundationDist = this.foundationDistSensor.getDistance(DistanceUnit.CM);
-                }
-                drivingLibrary.brakeStop();*/
-                //place the skystone !
-                //bring the grab arm back up enough that the drag arm can flip out
-                /*drivingLibrary.spinToAngle(Math.PI);
-                dragArm.setPower(0.5);
-                sleep(2000);
-                drivingLibrary.drive(0f,-.5f, 0f);
-                sleep(5500);
+                //180° to use drag arm
+                drivingLibrary.spinToAngle(Math.PI);
+                drivingLibrary.drive(0, .5f, 0);
+                sleep(350);
+                drivingLibrary.brakeStop();
+                //strafe into the wall basically
+                drivingLibrary.drive(-.5f, 0, 0);
+                sleep(1000);
+                drivingLibrary.brakeStop();
+                //return the grab arm to its proper place
+                grabArm.setPower(1);
+                sleep(3500);
+                grabArm.setPower(0);
+                //actiave the drag arm
+                dragArm.setPower(1);
+                sleep(250);
+                //drive back with the drag arm
+                drivingLibrary.drive(0f,-1f, 0f);
+                sleep(3500);
                 drivingLibrary.brakeStop();
                 dragArm.setPower(0);
-                sleep(2000);
-                dragArm.setPower(-0.5);
+                //flip the drag arm back in
+                dragArm.setPower(-1);
                 sleep(500);
                 dragArm.setPower(0);
-                drivingLibrary.drive(-.5f, 0, 0);
+                //park
+                drivingLibrary.drive(.5f, 0, 0);
                 sleep(1500);
-                drivingLibrary.brakeStop();*/
+                drivingLibrary.brakeStop();
                 ranOnce = true;
             }
         }

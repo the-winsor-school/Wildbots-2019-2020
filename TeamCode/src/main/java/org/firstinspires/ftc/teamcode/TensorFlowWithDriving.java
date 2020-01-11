@@ -52,6 +52,7 @@ import org.firstinspires.ftc.libraries.DrivingLibrary;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
+@Disabled
 @TeleOp(name = "Tensor Flow with Driving", group = "Testing")
 //@Disabled
 public class TensorFlowWithDriving extends LinearOpMode {

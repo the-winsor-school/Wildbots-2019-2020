@@ -151,9 +151,13 @@ public class DrivingLibrary {
     }
 
     public void spinToAngle(double angle) {
+        boolean positive = false;
         double goalAngle = getIMUAngle() + angle;
+        if (goalAngle > getIMUAngle()) {
+            positive = true;
+        }
         while (Math.abs(angle - getIMUAngle()) > .1) {
-            if (goalAngle > getIMUAngle()) {
+            if (positive == true) {
                 drive(0, 0, -.25f);
             }
             else {
