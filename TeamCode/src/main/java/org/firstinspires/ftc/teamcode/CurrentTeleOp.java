@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp(name = "Current TeleOp")
+@TeleOp(name = "Bevel and Arm TeleOp")
 public class CurrentTeleOp extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
@@ -19,7 +19,7 @@ public class CurrentTeleOp extends LinearOpMode {
 
     DcMotor grabArm;
     Servo grabHand;
-    DcMotor dragArm;
+    //DcMotor dragArm;
 
     public void runOpMode() throws InterruptedException {
 
@@ -34,7 +34,7 @@ public class CurrentTeleOp extends LinearOpMode {
 
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
         grabHand = hardwareMap.get(Servo.class, "grabHand");
-        dragArm = hardwareMap.get(DcMotor.class, "dragArm");
+        //dragArm = hardwareMap.get(DcMotor.class, "dragArm");
 
         waitForStart();
 
@@ -52,7 +52,8 @@ public class CurrentTeleOp extends LinearOpMode {
                 drivingLibrary.setSpeed(.5);
             }
 
-            drivingLibrary.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            //drivingLibrary.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            drivingLibrary.bevelDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
@@ -82,7 +83,7 @@ public class CurrentTeleOp extends LinearOpMode {
             // gamepad 2 a b to flip the drag arm
 
             //positive values go forwards
-            if (gamepad2.a) {
+            /*if (gamepad2.a) {
                 dragArm.setPower(1);
             }
             else if (gamepad2.b) {
@@ -90,7 +91,7 @@ public class CurrentTeleOp extends LinearOpMode {
             }
             else {
                 dragArm.setPower(0);
-            }
+            }*/
 
             telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
             telemetry.update();

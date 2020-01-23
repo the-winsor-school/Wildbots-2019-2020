@@ -177,10 +177,10 @@ public class DrivingLibrary {
             if (vt == 0) {
                 if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
                     if (getIMUAngle() > 0) {
-                        vt -= .1;
+                        vt += .1;
                     }
                     else {
-                        vt += .1;
+                        vt -= .1;
                     }
                 }
             }

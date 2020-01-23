@@ -45,7 +45,7 @@ import java.util.List;
  * callback to switch which stage of a pipeline is rendered to the viewport for debugging
  * purposes. We also show how to get data from the pipeline to your OpMode.
  */
-@TeleOp
+@TeleOp(name = "CV Pipeline")
 //@Disabled
 public class OpenCVTestTwo extends LinearOpMode
 {

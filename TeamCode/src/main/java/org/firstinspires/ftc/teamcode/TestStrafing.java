@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Disabled
 @TeleOp(name  = "Test Strafing", group = "Testing")
 public class TestStrafing extends LinearOpMode {
     //drive train
@@ -21,7 +20,6 @@ public class TestStrafing extends LinearOpMode {
         drivingLibrary.setSpeed(1);
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
-        float addToTurn = 0;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -40,7 +38,7 @@ public class TestStrafing extends LinearOpMode {
                 drivingLibrary.brakeStop();
             }**/
 
-            drivingLibrary.bevelDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, -gamepad1.right_stick_x);
+            drivingLibrary.bevelDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             telemetry.addData("Status", "Running");
             telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
             telemetry.addData("strafing angle", drivingLibrary.getStrafeAngle());

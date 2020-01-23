@@ -13,7 +13,7 @@ import java.util.List;
  * Created by lamanwyner on 1/25/19.
  */
 
-//@Disabled
+@Disabled
 @TeleOp(name = "Test PID Constants for Mineral Sampling", group = "Test")
 public class TestPID extends LinearOpMode {
      // This OpMode is for testing the constant values in the PID loop using a game controller

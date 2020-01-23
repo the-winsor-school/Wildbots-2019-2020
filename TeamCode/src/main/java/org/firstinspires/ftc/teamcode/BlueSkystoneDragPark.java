@@ -28,6 +28,7 @@ public class BlueSkystoneDragPark extends LinearOpMode {
     OpenCVTestTwo.StageSwitchingPipeline stageSwitchingPipeline;
 
     Rev2mDistanceSensor stoneDistSensor;
+    Rev2mDistanceSensor wallDistSensor;
 
     String identity;
 
@@ -41,6 +42,7 @@ public class BlueSkystoneDragPark extends LinearOpMode {
         drivingLibrary.setMode(drivingMode);
 
         stoneDistSensor = hardwareMap.get(Rev2mDistanceSensor.class, "stoneDistanceSensor");
+        wallDistSensor = hardwareMap.get(Rev2mDistanceSensor.class, "wallDistanceSensor");
 
         dragArm = hardwareMap.get(DcMotor.class, "dragArm");
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
@@ -62,13 +64,13 @@ public class BlueSkystoneDragPark extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
             if (!ranOnce) {
                 drivingLibrary.resetEncoderValues();
                 //drive to stones
                 double stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
                 double initialDist = stoneDist;
-                while (stoneDist > 32) {
+                while (stoneDist > 27) {
                     double motorPower = stoneDist / initialDist / 2;
                     drivingLibrary.drive(0, (float) -motorPower, 0);
                     stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
@@ -87,13 +89,13 @@ public class BlueSkystoneDragPark extends LinearOpMode {
                         skystoneFound = true;
                     }
                     else {
-                        drivingLibrary.drive(.5f, 0f, 0f);
+                        drivingLibrary.drive(-.5f, 0f, 0f);
                     }
                 }
                 //flip arm, grab block
                 grabHand.setPosition(.7);
                 grabArm.setPower(-1);
-                sleep(5000);
+                    sleep(5000);
                 grabArm.setPower(0);
                 grabHand.setPosition(0);
                 grabArm.setPower(1);
@@ -106,9 +108,14 @@ public class BlueSkystoneDragPark extends LinearOpMode {
                 //turn, then drive forwards to foundation, then turn back
                 drivingLibrary.spinToAngle(Math.PI/2 - .15);
                 drivingLibrary.drive(0, -1, 0);
-                sleep(1750);
+                sleep(1000);
                 drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(0);
+                //drivingLibrary.spinToAngle(0);
+                //turn and drive forward
+                //drivingLibrary.spinToAngle(.3);
+                /*drivingLibrary.drive(0, -.5f, 0);
+                sleep(500);
+                drivingLibrary.brakeStop();*/
                 //raise arm a bit, then drive forward
                 grabArm.setPower(1);
                 sleep(1000);
@@ -125,17 +132,21 @@ public class BlueSkystoneDragPark extends LinearOpMode {
                 grabArm.setPower(1);
                 sleep(1000);
                 grabArm.setPower(0);
+                //park
+                //drivingLibrary.spinToAngle(-.3);
                 drivingLibrary.drive(0, .5f, 0);
-                sleep(350);
+                sleep(750);
                 drivingLibrary.brakeStop();
+                //back up slightly to park
                 //180° to use drag arm
-                drivingLibrary.spinToAngle(Math.PI);
+                /*drivingLibrary.spinToAngle(Math.PI);
                 drivingLibrary.drive(0, .5f, 0);
                 sleep(350);
                 drivingLibrary.brakeStop();
                 //strafe into the wall basically
-                drivingLibrary.drive(.5f, 0, 0);
-                sleep(1000);
+                while (wallDistSensor.getDistance(DistanceUnit.CM) > 5) {
+                    drivingLibrary.drive(-.5f, 0, 0);
+                }
                 drivingLibrary.brakeStop();
                 //return the grab arm to its proper place
                 grabArm.setPower(1);
@@ -145,7 +156,7 @@ public class BlueSkystoneDragPark extends LinearOpMode {
                 dragArm.setPower(1);
                 sleep(250);
                 //drive back with the drag arm
-                drivingLibrary.drive(0,-1, 0);
+                drivingLibrary.drive(0f,-1f, 0f);
                 sleep(3500);
                 drivingLibrary.brakeStop();
                 dragArm.setPower(0);
@@ -154,9 +165,16 @@ public class BlueSkystoneDragPark extends LinearOpMode {
                 sleep(500);
                 dragArm.setPower(0);
                 //park
-                drivingLibrary.drive(-.5f, 0, 0);
+                drivingLibrary.drive(.5f, 0, 0);
                 sleep(1500);
+                drivingLibrary.brakeStop();*/
+                /*drivingLibrary.drive(0, -.5f, 0);
+                sleep(500);
                 drivingLibrary.brakeStop();
+                drivingLibrary.spinToAngle(Math.PI/2 + .1);
+                drivingLibrary.drive(0, -.5f, 0);
+                sleep(500);
+                drivingLibrary.brakeStop();*/
                 ranOnce = true;
             }
         }
