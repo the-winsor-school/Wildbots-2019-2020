@@ -1,3 +1,5 @@
+//just a note - the robot is called R2B2 but Arby for short (RB)
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -19,7 +21,8 @@ public class CurrentTeleOp extends LinearOpMode {
 
     DcMotor grabArm;
     Servo grabHand;
-    //DcMotor dragArm;
+    Servo dragLeft;
+    Servo dragRight;
 
     public void runOpMode() throws InterruptedException {
 
@@ -34,7 +37,8 @@ public class CurrentTeleOp extends LinearOpMode {
 
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
         grabHand = hardwareMap.get(Servo.class, "grabHand");
-        //dragArm = hardwareMap.get(DcMotor.class, "dragArm");
+        dragLeft = hardwareMap.get(Servo.class, "dragLeft");
+        dragRight = hardwareMap.get(Servo.class, "dragRight");
 
         waitForStart();
 
@@ -80,18 +84,17 @@ public class CurrentTeleOp extends LinearOpMode {
 
             telemetry.addData("Servo position: ", servoPos);
 
-            // gamepad 2 a b to flip the drag arm
-
-            //positive values go forwards
-            /*if (gamepad2.a) {
-                dragArm.setPower(1);
+            //set drag servo positions
+            //go down when a is pressed
+            //go up when b is pressed
+            if (gamepad2.a) {
+                dragLeft.setPosition(.5);
+                dragRight.setPosition(.5);
             }
             else if (gamepad2.b) {
-                dragArm.setPower(-.5);
+                dragLeft.setPosition(0);
+                dragRight.setPosition(0);
             }
-            else {
-                dragArm.setPower(0);
-            }*/
 
             telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
             telemetry.update();
