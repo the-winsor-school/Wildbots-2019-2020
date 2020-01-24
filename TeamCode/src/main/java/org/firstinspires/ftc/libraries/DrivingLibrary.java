@@ -111,6 +111,8 @@ public class DrivingLibrary {
     public void drive(float x, float y, float t) {
         double vd = strafeSpeed(x, y);
         theta = Math.atan2(y, x);
+            x = 0;
+        theta = Math.atan2(y, x);
         double vt = t;
 
 
