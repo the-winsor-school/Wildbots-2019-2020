@@ -93,7 +93,7 @@ public class OpenCVTestTwo extends LinearOpMode
      * particularly useful during pipeline development. We also show how
      * to get data from the pipeline to your OpMode.
      */
-    static class StageSwitchingPipeline extends OpenCvPipeline
+    public static class StageSwitchingPipeline extends OpenCvPipeline
     {
         Mat yCbCrChan2Mat = new Mat();
         Mat thresholdMat = new Mat();
