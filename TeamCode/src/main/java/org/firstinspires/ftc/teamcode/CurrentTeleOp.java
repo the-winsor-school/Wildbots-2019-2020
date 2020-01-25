@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp(name = "Bevel and Drag TeleOp")
+@TeleOp(name = "Current TeleOp")
 public class CurrentTeleOp extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
