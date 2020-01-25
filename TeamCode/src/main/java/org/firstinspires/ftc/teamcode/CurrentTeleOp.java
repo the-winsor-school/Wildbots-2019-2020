@@ -1,4 +1,4 @@
-//just a note - the robot is called R2B2 but Arby for short (RB)
+//just a note - the robot is called R2B2 but Arby for short (RB) RB we have the beeps
 
 package org.firstinspires.ftc.teamcode;
 
@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp(name = "Bevel and Arm TeleOp")
+@TeleOp(name = "Bevel and Drag TeleOp")
 public class CurrentTeleOp extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
@@ -21,8 +21,8 @@ public class CurrentTeleOp extends LinearOpMode {
 
     DcMotor grabArm;
     Servo grabHand;
-    Servo dragLeft;
-    Servo dragRight;
+    Servo dragNoYoda;
+    Servo dragYoda;
 
     public void runOpMode() throws InterruptedException {
 
@@ -37,8 +37,8 @@ public class CurrentTeleOp extends LinearOpMode {
 
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
         grabHand = hardwareMap.get(Servo.class, "grabHand");
-        dragLeft = hardwareMap.get(Servo.class, "dragLeft");
-        dragRight = hardwareMap.get(Servo.class, "dragRight");
+        dragNoYoda = hardwareMap.get(Servo.class, "dragLeft");
+        dragYoda = hardwareMap.get(Servo.class, "dragRight");
 
         waitForStart();
 
@@ -64,10 +64,10 @@ public class CurrentTeleOp extends LinearOpMode {
 
             // gamepad 2 up/down to move grab arm up/down
             if (gamepad2.dpad_up){
-                grabArm.setPower(1);
+                grabArm.setPower(-1);
             }
             else if (gamepad2.dpad_down) {
-                grabArm.setPower(-1);
+                grabArm.setPower(1);
             }
             else {
                 grabArm.setPower(0);
@@ -85,18 +85,21 @@ public class CurrentTeleOp extends LinearOpMode {
             telemetry.addData("Servo position: ", servoPos);
 
             //set drag servo positions
-            //go down when a is pressed
-            //go up when b is pressed
+            //go up when a is pressed
+            //go down when b is pressed
             if (gamepad2.a) {
-                dragLeft.setPosition(.5);
-                dragRight.setPosition(.5);
+                dragNoYoda.setPosition(.1);
+                dragYoda.setPosition(.95);
             }
             else if (gamepad2.b) {
-                dragLeft.setPosition(0);
-                dragRight.setPosition(0);
+                dragNoYoda.setPosition(.85);
+                dragYoda.setPosition(.2);
             }
 
-            telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
+
+            //telemetry.addData("Motor powers", drivingLibrary.getMotorPower());
+            telemetry.addData("No yoda servo position", dragNoYoda.getPosition());
+            telemetry.addData("Yoda servo position", dragYoda.getPosition());
             telemetry.update();
 
         }

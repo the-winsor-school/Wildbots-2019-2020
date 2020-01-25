@@ -160,10 +160,10 @@ public class DrivingLibrary {
         }
         while (Math.abs(angle - getIMUAngle()) > .1) {
             if (positive == true) {
-                drive(0, 0, -.25f);
+                bevelDrive(0, 0, .25f);
             }
             else {
-                drive(0, 0, .25f);
+                bevelDrive(0, 0, -.25f);
             }
         }
         brakeStop();
