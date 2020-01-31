@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Disabled
 @Autonomous(name = "Red: Drag, Park")
 
 public class RedDragPark extends LinearOpMode {

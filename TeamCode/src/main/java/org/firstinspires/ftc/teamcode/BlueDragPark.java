@@ -4,9 +4,11 @@ package org.firstinspires.ftc.teamcode;
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
         import com.qualcomm.robotcore.hardware.DcMotor;
         import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
         import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Disabled
 @Autonomous(name = "Blue: Drag, Park")
 
 public class BlueDragPark extends LinearOpMode {

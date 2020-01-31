@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous
-public class BlueFoundationParkAuton extends LinearOpMode {
+public class RedFoundationParkAuton extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
@@ -39,7 +39,7 @@ public class BlueFoundationParkAuton extends LinearOpMode {
                 sleep(825);
                 drivingLibrary.brakeStop();
                 //strafe towards wall
-                drivingLibrary.bevelDrive(-.5f, 0, 0);
+                drivingLibrary.bevelDrive(.5f, 0, 0);
                 sleep(450);
                 drivingLibrary.brakeStop();
                 //grab foundation
@@ -54,7 +54,7 @@ public class BlueFoundationParkAuton extends LinearOpMode {
                 sleep(750);
                 drivingLibrary.brakeStop();
                 sleep(100);
-                drivingLibrary.spinToAngle(Math.PI/2 + .1);
+                drivingLibrary.spinToAngle(-Math.PI/2 - .1);
                 sleep(500);
                 drivingLibrary.drive(0, .5f, 0);
                 sleep(1500);
@@ -65,7 +65,7 @@ public class BlueFoundationParkAuton extends LinearOpMode {
                 sleep(250);
                 drivingLibrary.brakeStop();
                 //strafe into the wall at half speed because we are nice yay
-                drivingLibrary.bevelDrive(-.5f, 0, 0);
+                drivingLibrary.bevelDrive(.5f, 0, 0);
                 sleep(1000);
                 drivingLibrary.brakeStop();
                 //back up to parking spot
