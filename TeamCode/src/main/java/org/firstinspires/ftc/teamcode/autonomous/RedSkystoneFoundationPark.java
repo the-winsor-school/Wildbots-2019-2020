@@ -16,7 +16,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous
-public class RedSkystonePark extends LinearOpMode {
+public class RedSkystoneFoundationPark extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
     int drivingMode;
@@ -24,6 +24,9 @@ public class RedSkystonePark extends LinearOpMode {
     DcMotor grabArm;
 
     Servo grabHand;
+
+    Servo dragNoYoda;
+    Servo dragYoda;
 
     OpenCvCamera phoneCam;
     OpenCVTestTwo.StageSwitchingPipeline stageSwitchingPipeline;
@@ -46,6 +49,9 @@ public class RedSkystonePark extends LinearOpMode {
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
 
         grabHand = hardwareMap.get(Servo.class, "grabHand");
+
+        dragNoYoda = hardwareMap.get(Servo.class, "dragLeft");
+        dragYoda = hardwareMap.get(Servo.class, "dragRight");
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
@@ -112,10 +118,10 @@ public class RedSkystonePark extends LinearOpMode {
                 drivingLibrary.bevelDrive(0, 1, 0);
                 sleep(200);
                 drivingLibrary.brakeStop();
-                //turn, then drive forwards to foundation, raise arm a bit, then turn back
+                //turn, then drive forwards to other side of field, raise arm a bit, then turn back
                 drivingLibrary.spinToAngle(-Math.PI/2);
                 drivingLibrary.bevelDrive(0, -1, 0);
-                sleep(2000);
+                sleep(2200);
                 drivingLibrary.brakeStop();
                 grabArm.setPower(1);
                 sleep(200);
@@ -134,18 +140,49 @@ public class RedSkystonePark extends LinearOpMode {
                 grabArm.setPower(1);
                 sleep(500);
                 grabArm.setPower(0);
-                //drive back then park and move arm down a little
-                drivingLibrary.drive(0, .75f, 0);
-                sleep(650);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(-Math.PI/2 + .1);
-                sleep(200);
                 drivingLibrary.bevelDrive(0, .75f, 0);
-                sleep(1100);
+                sleep(300);
                 drivingLibrary.brakeStop();
+                //spin 180°
+                drivingLibrary.spinToAngle(-Math.PI);
+                //move arm down
                 grabArm.setPower(-1);
-                sleep(150);
+                sleep(250);
                 grabArm.setPower(0);
+                drivingLibrary.bevelDrive(0, .75f, 0);
+                sleep(475);
+                drivingLibrary.brakeStop();
+                //literally copied and pasted foundation drag auton
+                //strafe toward wall
+                drivingLibrary.bevelDrive(.5f, 0, 0);
+                sleep(450);
+                drivingLibrary.brakeStop();
+                //grab foundation
+                dragNoYoda.setPosition(.85);
+                dragYoda.setPosition(.2);
+                sleep(1500);
+                drivingLibrary.bevelDrive(0, -.75f, 0);
+                sleep(750);
+                drivingLibrary.brakeStop();
+                sleep(100);
+                drivingLibrary.spinToAngle(-Math.PI/2 - .1);
+                sleep(500);
+                drivingLibrary.drive(0, .5f, 0);
+                sleep(1500);
+                dragNoYoda.setPosition(.1);
+                dragYoda.setPosition(.95);
+                //strafe away from foundation
+                drivingLibrary.bevelDrive(0, -.75f, 0);
+                sleep(250);
+                drivingLibrary.brakeStop();
+                //strafe into the wall at half speed because we are nice yay
+                drivingLibrary.bevelDrive(.5f, 0, 0);
+                sleep(1000);
+                drivingLibrary.brakeStop();
+                //back up to parking spot
+                drivingLibrary.bevelDrive(0, -.75f, 0);
+                sleep(750);
+                drivingLibrary.brakeStop();
                 ranOnce = true;
             }
         }
