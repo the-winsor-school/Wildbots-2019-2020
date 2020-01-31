@@ -100,7 +100,7 @@ public class OpenCVTestTwo extends LinearOpMode
         Mat contoursOnFrameMat = new Mat();
         List<MatOfPoint> contoursList = new ArrayList<>();
         int numContoursFound;
-        int[] rectDimension = new int[] {300, 150, 50, 50};
+        int[] rectDimension = new int[] {275, 150, 50, 50};
 
         enum Stage
         {

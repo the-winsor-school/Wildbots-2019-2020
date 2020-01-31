@@ -121,7 +121,7 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 //turn, then drive forwards to other side of field, raise arm a bit, then turn back
                 drivingLibrary.spinToAngle(-Math.PI/2);
                 drivingLibrary.bevelDrive(0, -1, 0);
-                sleep(2200);
+                sleep(1950);
                 drivingLibrary.brakeStop();
                 grabArm.setPower(1);
                 sleep(200);
@@ -129,7 +129,7 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 drivingLibrary.spinToAngle(.0001);
                 //then drive forward
                 drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(275);
+                sleep(350);
                 drivingLibrary.brakeStop();
                 //lower arm, release stone
                 grabArm.setPower(-1);
@@ -144,13 +144,13 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 sleep(300);
                 drivingLibrary.brakeStop();
                 //spin 180°
-                drivingLibrary.spinToAngle(-Math.PI);
+                drivingLibrary.spinToAngle(Math.PI);
                 //move arm down
                 grabArm.setPower(-1);
                 sleep(250);
                 grabArm.setPower(0);
-                drivingLibrary.bevelDrive(0, .75f, 0);
-                sleep(475);
+                drivingLibrary.bevelDrive(0, .75f, -.01f);
+                sleep(125);
                 drivingLibrary.brakeStop();
                 //literally copied and pasted foundation drag auton
                 //strafe toward wall
@@ -160,13 +160,14 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 //grab foundation
                 dragNoYoda.setPosition(.85);
                 dragYoda.setPosition(.2);
+                sleep(1000);
+                drivingLibrary.bevelDrive(0, -.5f, 0);
                 sleep(1500);
-                drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(750);
                 drivingLibrary.brakeStop();
                 sleep(100);
-                drivingLibrary.spinToAngle(-Math.PI/2 - .1);
-                sleep(500);
+                drivingLibrary.bevelDrive(0, 0, -.35f);
+                sleep(3200);
+                drivingLibrary.brakeStop();
                 drivingLibrary.drive(0, .5f, 0);
                 sleep(1500);
                 dragNoYoda.setPosition(.1);
@@ -175,9 +176,9 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 drivingLibrary.bevelDrive(0, -.75f, 0);
                 sleep(250);
                 drivingLibrary.brakeStop();
-                //strafe into the wall at half speed because we are nice yay
-                drivingLibrary.bevelDrive(.5f, 0, 0);
-                sleep(1000);
+                //strafe sideways at half speed because we are nice yay
+                drivingLibrary.bevelDrive(-.5f, 0, 0);
+                sleep(500);
                 drivingLibrary.brakeStop();
                 //back up to parking spot
                 drivingLibrary.bevelDrive(0, -.75f, 0);
