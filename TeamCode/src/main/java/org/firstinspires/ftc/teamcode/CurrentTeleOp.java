@@ -68,7 +68,9 @@ public class CurrentTeleOp extends LinearOpMode {
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
             // gamepad 2 up/down to move grab arm up/down
-            if (gamepad2.dpad_up){
+            grabArm.setPower(-gamepad2.left_stick_y);
+
+            /*if (gamepad2.dpad_up){
                 grabArm.setPower(1);
             }
             else if (gamepad2.dpad_down) {
@@ -76,7 +78,7 @@ public class CurrentTeleOp extends LinearOpMode {
             }
             else {
                 grabArm.setPower(0);
-            }
+            }*/
 
             // gamepad 2 left right to open/close the grab hand
             grabHand.setPosition(servoPos);

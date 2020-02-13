@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous
+@Autonomous(name= "RED SKYSTONE ON FOUNDATION")
 public class RedSkystoneFoundationPark extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
@@ -78,7 +78,7 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 //drive to stones
                 double stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
                 double initialDist = stoneDist;
-                while (stoneDist > 22) {
+                while (stoneDist > 20) {
                     double motorPower = stoneDist / initialDist / 2;
                     drivingLibrary.bevelDrive(0, (float) -motorPower, 0);
                     stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
@@ -109,6 +109,7 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 grabArm.setPower(-1);
                 sleep(2000);
                 grabArm.setPower(0);
+                sleep(500);
                 grabHand.setPosition(0);
                 sleep(500);
                 grabArm.setPower(1);
@@ -116,12 +117,12 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 grabArm.setPower(0);
                 //drive back a bit
                 drivingLibrary.bevelDrive(0, 1, 0);
-                sleep(200);
+                sleep(100);
                 drivingLibrary.brakeStop();
                 //turn, then drive forwards to other side of field, raise arm a bit, then turn back
                 drivingLibrary.spinToAngle(-Math.PI/2);
                 drivingLibrary.bevelDrive(0, -1, 0);
-                sleep(1950);
+                sleep(1875);
                 drivingLibrary.brakeStop();
                 grabArm.setPower(1);
                 sleep(200);
@@ -129,18 +130,50 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 drivingLibrary.spinToAngle(.0001);
                 //then drive forward
                 drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(350);
+                sleep(700);
                 drivingLibrary.brakeStop();
                 //lower arm, release stone
                 grabArm.setPower(-1);
-                sleep(350);
+                sleep(425);
                 grabArm.setPower(0);
                 grabHand.setPosition(.7);
                 //raise arm a bit
                 grabArm.setPower(1);
                 sleep(500);
                 grabArm.setPower(0);
+                drivingLibrary.bevelDrive(0, .75f,0);
+                sleep(350);
+                drivingLibrary.brakeStop();
+                //option 1 - drag
+                drivingLibrary.spinToAngle(-Math.PI);
+                for (float i = .4f; i < 1; i += .15) {
+                    grabArm.setPower(i);
+                    sleep(100);
+                }
+                grabArm.setPower(1);
+                sleep(1000);
+                grabArm.setPower(0);
                 drivingLibrary.bevelDrive(0, .75f, 0);
+                sleep(350);
+                drivingLibrary.brakeStop();
+                sleep(500);
+                dragNoYoda.setPosition(1);
+                dragYoda.setPosition(0);
+                sleep(1000);
+                drivingLibrary.bevelDrive(0, -.35f, 0);
+                sleep(5000);
+                drivingLibrary.brakeStop();
+
+                //drag end
+
+                //option 2 - park
+                /*drivingLibrary.spinToAngle(Math.PI/2);
+                drivingLibrary.bevelDrive(0, .5f, 0);
+                sleep(950);
+                drivingLibrary.brakeStop();*/
+                //park end
+
+                /*drivingLibrary.bevelDrive(0, .75f, 0);
                 sleep(300);
                 drivingLibrary.brakeStop();
                 //spin 180°
@@ -151,8 +184,8 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 grabArm.setPower(0);
                 drivingLibrary.bevelDrive(0, .75f, -.01f);
                 sleep(125);
-                drivingLibrary.brakeStop();
-                //literally copied and pasted foundation drag auton
+                drivingLibrary.brakeStop();*/
+                /*//literally copied and pasted foundation drag auton
                 //strafe toward wall
                 drivingLibrary.bevelDrive(.5f, 0, 0);
                 sleep(450);
@@ -183,7 +216,7 @@ public class RedSkystoneFoundationPark extends LinearOpMode {
                 //back up to parking spot
                 drivingLibrary.bevelDrive(0, -.75f, 0);
                 sleep(750);
-                drivingLibrary.brakeStop();
+                drivingLibrary.brakeStop();*/
                 ranOnce = true;
             }
         }

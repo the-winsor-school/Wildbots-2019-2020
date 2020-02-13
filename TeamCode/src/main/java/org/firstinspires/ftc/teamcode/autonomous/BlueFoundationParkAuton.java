@@ -42,16 +42,17 @@ public class BlueFoundationParkAuton extends LinearOpMode {
                 drivingLibrary.bevelDrive(-.5f, 0, 0);
                 sleep(450);
                 drivingLibrary.brakeStop();
+                sleep(125);
                 //grab foundation
-                dragNoYoda.setPosition(.85);
-                dragYoda.setPosition(.2);
+                dragNoYoda.setPosition(1);
+                dragYoda.setPosition(0);
                 sleep(1500);
                 //strafe away from wall
                 //drivingLibrary.bevelDrive(.5f, 0, 0);
                 //sleep(500);
                 //negative y value to drive forwards
-                drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(750);
+                drivingLibrary.bevelDrive(0, -.5f, 0);
+                sleep(1000);
                 drivingLibrary.brakeStop();
                 sleep(100);
                 drivingLibrary.spinToAngle(Math.PI/2 + .1);
