@@ -115,19 +115,16 @@ public class RedDoubleSkystonePark extends LinearOpMode {
                 //turn, then drive forwards to the other side
                 drivingLibrary.spinToAngle(-Math.PI/2);
                 drivingLibrary.bevelDrive(0, -1, 0);
-                sleep(1000);
+                sleep(1700);
                 drivingLibrary.brakeStop();
                 //release stone
-                grabArm.setPower(-1);
-                sleep(350);
-                grabArm.setPower(0);
                 grabHand.setPosition(.7);
                 //drive back to the other side
                 drivingLibrary.drive(0, .75f, 0);
-                sleep(2500);
+                sleep(3000);
                 drivingLibrary.brakeStop();
                 //turn back
-                drivingLibrary.spinToAngle(Math.PI/2 + .1);
+                drivingLibrary.spinToAngle(0.0001);
                 //drives forward a bit
                 drivingLibrary.bevelDrive(0, -1, 0);
                 sleep(200);
