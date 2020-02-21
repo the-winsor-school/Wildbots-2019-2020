@@ -72,7 +72,7 @@ public class BlueSkystonePark extends LinearOpMode {
                 //drive to stones
                 double stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
                 double initialDist = stoneDist;
-                while (stoneDist > 22) {
+                while (stoneDist > 25) {
                     double motorPower = stoneDist / initialDist / 2;
                     drivingLibrary.bevelDrive(0, (float) -motorPower, 0);
                     stoneDist = this.stoneDistSensor.getDistance(DistanceUnit.CM);
@@ -91,58 +91,88 @@ public class BlueSkystonePark extends LinearOpMode {
                         skystoneFound = true;
                     }
                     else {
-                        drivingLibrary.bevelDrive(.5f, 0f, 0f);
+                        drivingLibrary.bevelDrive(-.5f, 0f, 0f);
                     }
                 }
                 //flip arm, grab block
                 grabHand.setPosition(.7);
+                for (float i = -.4f; i > -1; i-= .15) {
+                    grabArm.setPower(i);
+                    sleep(100);
+                }
                 grabArm.setPower(-1);
-                sleep(4500);
+                sleep(2000);
                 grabArm.setPower(0);
                 grabHand.setPosition(0);
-                grabArm.setPower(1);
                 sleep(500);
+                grabArm.setPower(1);
+                sleep(450);
                 grabArm.setPower(0);
                 //drive back a bit
                 drivingLibrary.bevelDrive(0, 1, 0);
                 sleep(100);
                 drivingLibrary.brakeStop();
-                //turn, then drive forwards to foundation, raise arm a bit, then turn back
-                drivingLibrary.spinToAngle(-Math.PI/2 - .1);
+                //turn, then drive forwards to foundation then start slowing down
+                drivingLibrary.spinToAngle(Math.PI/2);
                 drivingLibrary.bevelDrive(0, -1, 0);
-                sleep(2000);
-                drivingLibrary.brakeStop();
+                sleep(1125);
+                drivingLibrary.bevelDrive(0, -.5f, 0);
                 grabArm.setPower(1);
-                sleep(1500);
+                sleep(400);
                 grabArm.setPower(0);
-                drivingLibrary.spinToAngle(.1);
+                sleep(1250);
+                drivingLibrary.brakeStop();
+                sleep(250);
+                grabHand.setPosition(.7);
+                sleep(250);
+                //park in the far spot
+                drivingLibrary.bevelDrive(-.75f, 0, 0);
+                sleep(280);
+                drivingLibrary.brakeStop();
+                drivingLibrary.bevelDrive(0, .75f, .03f);
+                grabArm.setPower(-1);
+                sleep(400);
+                grabArm.setPower(0);
+                sleep(850);
+                drivingLibrary.brakeStop();
+                //park in the close spot if we need to
+                /* drivingLibrary.bevelDrive(.5f, 0, 0);
+                sleep(75);
+                drivingLibrary.brakeStop();
+                drivingLibrary.bevelDrive(0, .75f, .03f);
+                sleep(1250);
+                drivingLibrary.brakeStop(); */
+
+
+                /*grabArm.setPower(1);
+                sleep(325);
+                grabArm.setPower(0);
+                drivingLibrary.spinToAngle(.0001);
                 //then drive forward
                 drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(400);
+                sleep(325);
                 drivingLibrary.brakeStop();
                 //lower arm, release stone
-                grabArm.setPower(-1);
-                sleep(1000);
-                grabArm.setPower(0);
+                //grabArm.setPower(-1);
+                //sleep(350);
+                //grabArm.setPower(0);
                 grabHand.setPosition(.7);
                 //raise arm a bit
-                grabArm.setPower(1);
-                sleep(1250);
-                grabArm.setPower(0);
+                //grabArm.setPower(1);
+                //sleep(500);
+                //grabArm.setPower(0);
                 //drive back then park and move arm down a little
-                //drivingLibrary.drive(0, .75f, 0);
-                //sleep(350);
-                //drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(.5f, 0, 0);
-                sleep(500);
-                drivingLibrary.spinToAngle(-Math.PI/2 + .1);
+                drivingLibrary.bevelDrive(0, .75f, 0);
+                sleep(250);
+                drivingLibrary.brakeStop();
+                drivingLibrary.spinToAngle(-Math.PI/2 + .13);
                 sleep(200);
                 drivingLibrary.bevelDrive(0, .75f, 0);
-                sleep(900);
-                drivingLibrary.brakeStop();
                 grabArm.setPower(-1);
-                sleep(500);
+                sleep(200);
                 grabArm.setPower(0);
+                sleep(900);
+                drivingLibrary.brakeStop();*/
                 ranOnce = true;
             }
         }

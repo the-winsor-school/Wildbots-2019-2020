@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
-@Autonomous(name = "Red: Skystone, Drag, Park")
+@Autonomous(name = "PARK")
 public class PurpleAutonPark extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
