@@ -19,10 +19,13 @@ public class CurrentTeleOp extends LinearOpMode {
 
     double servoPos = 0.3; //init servos
 
+    double grabberPos = 1;
+
     DcMotor grabArm;
     Servo grabHand;
     Servo dragNoYoda;
     Servo dragYoda;
+    Servo grabber;
 
     public void runOpMode() throws InterruptedException {
 
@@ -39,6 +42,7 @@ public class CurrentTeleOp extends LinearOpMode {
         grabHand = hardwareMap.get(Servo.class, "grabHand");
         dragNoYoda = hardwareMap.get(Servo.class, "dragLeft");
         dragYoda = hardwareMap.get(Servo.class, "dragRight");
+        grabber = hardwareMap.get(Servo.class, "grabber");
 
         drivingLibrary.setSpeed(1);
 
@@ -69,6 +73,32 @@ public class CurrentTeleOp extends LinearOpMode {
 
             // gamepad 2 up/down to move grab arm up/down
             grabArm.setPower(-gamepad2.left_stick_y);
+
+            if (gamepad2.right_stick_x < 0) {
+                if (grabberPos >= .3) {
+                    grabberPos += gamepad2.right_stick_x / 25;
+                }
+            }
+            else {
+                if (grabberPos < 1) {
+                    grabberPos += gamepad2.right_stick_x / 25;
+                }
+
+            }
+
+
+
+            telemetry.addData("grabber position", grabberPos);
+
+            //move grabber man
+            /*if (gamepad1.dpad_up) {
+                grabberPos += .01;
+            }
+            else if (gamepad1.dpad_down) {
+                grabberPos -= .01;
+            }*/
+
+            grabber.setPosition(grabberPos);
 
             /*if (gamepad2.dpad_up){
                 grabArm.setPower(1);

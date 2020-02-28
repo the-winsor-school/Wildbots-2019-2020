@@ -159,7 +159,7 @@ public class DrivingLibrary {
             positive = true;
         }
         while (Math.abs(angle - getIMUAngle()) > .1) {
-            if (positive == true) {
+            if (positive) {
                 bevelDrive(0, 0, .25f);
             }
             else {
