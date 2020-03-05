@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@Disabled
 @Autonomous
 public class GrabberTest extends LinearOpMode {
     Servo grabber;
@@ -16,11 +14,10 @@ public class GrabberTest extends LinearOpMode {
         boolean ranOnce = false;
         waitForStart();
         if (opModeIsActive()) {
-            grabber.setPosition(1);
-            sleep(1875);
             grabber.setPosition(0.3);
             sleep(1875);
-            grabber.setPosition(1);
+            grabber.setPosition(0.8);
+            sleep(1875);
         }
     }
 }

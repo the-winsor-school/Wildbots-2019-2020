@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.autonomous;
+//this works!!! put the robot on the side close to the wall
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous
-public class BlueFoundationParkAuton extends LinearOpMode {
+public class RedFoundationDragPark extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
@@ -31,49 +32,46 @@ public class BlueFoundationParkAuton extends LinearOpMode {
         dragYoda = hardwareMap.get(Servo.class, "dragRight");
 
         waitForStart();
-
         if (opModeIsActive()) {
             if (!ranOnce) {
                 //positive y value to drive backwards
                 drivingLibrary.bevelDrive(0, .75f, 0);
                 sleep(825);
                 drivingLibrary.brakeStop();
+
                 //strafe towards wall
-                drivingLibrary.bevelDrive(-.5f, 0, 0);
-                sleep(450);
+                drivingLibrary.bevelDrive(.5f, 0, 0);
+                sleep(1000);
                 drivingLibrary.brakeStop();
-                sleep(125);
+
                 //grab foundation
                 dragNoYoda.setPosition(1);
                 dragYoda.setPosition(0);
                 sleep(1500);
+
                 //strafe away from wall
-                //drivingLibrary.bevelDrive(.5f, 0, 0);
-                //sleep(500);
+                drivingLibrary.bevelDrive(-.25f, 0, 0);
+                sleep(500);
+                drivingLibrary.brakeStop();
+
                 //negative y value to drive forwards
                 drivingLibrary.bevelDrive(0, -.5f, 0);
-                sleep(1000);
+                sleep(1200);
                 drivingLibrary.brakeStop();
-                sleep(100);
-                drivingLibrary.spinToAngle(Math.PI/2 + .1);
+
+                //spins the foundation into the ZONE
+                drivingLibrary.spinToAngle(-Math.PI/2 - .1);
                 sleep(500);
-                drivingLibrary.drive(0, .5f, 0);
-                sleep(1500);
+
+                //unhooks the drag things from the foundation
                 dragNoYoda.setPosition(.1);
                 dragYoda.setPosition(.95);
+
                 //strafe away from foundation
                 drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(250);
-                drivingLibrary.brakeStop();
-                //strafe into the wall at half speed because we are nice yay
-                drivingLibrary.bevelDrive(-.5f, 0, 0);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                //back up to parking spot
-                drivingLibrary.bevelDrive(0, -.75f, 0);
-                sleep(750);
-                drivingLibrary.brakeStop();
-                ranOnce = true;
+
+                //and parks
             }
         }
     }
