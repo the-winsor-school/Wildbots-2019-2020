@@ -46,7 +46,7 @@ import java.util.List;
  * purposes. We also show how to get data from the pipeline to your OpMode.
  */
 @TeleOp(name = "CV Pipeline")
-//@Disabled
+@Disabled
 public class OpenCVTestTwo extends LinearOpMode
 {
     OpenCvCamera phoneCam;

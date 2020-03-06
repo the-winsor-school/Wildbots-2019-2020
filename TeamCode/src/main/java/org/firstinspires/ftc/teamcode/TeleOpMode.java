@@ -20,6 +20,7 @@ public class TeleOpMode extends LinearOpMode {
     DcMotor grabArm;
     DcMotor baseArm;
     Servo grabHand;
+    Servo grabber;
 
 
 
@@ -33,6 +34,7 @@ public class TeleOpMode extends LinearOpMode {
         grabHand = hardwareMap.get(Servo.class, "grabHand");
         baseArm = hardwareMap.get(DcMotor.class, "baseArm");
         grabArm = hardwareMap.get(DcMotor.class, "grabArm");
+        grabber = hardwareMap.get(Servo.class, "grabber");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -60,10 +62,11 @@ public class TeleOpMode extends LinearOpMode {
             //grab arm - the one that holds the 🅱️loccs
 
 
-
+            //x  moves up
             if (gamepad2.x) {
                 grabArm.setPower(0.7);
             }
+            //y moves  down
             else if (gamepad2.y) {
                 grabArm.setPower(-0.7);
             }
@@ -71,9 +74,8 @@ public class TeleOpMode extends LinearOpMode {
                 grabArm.setPower(0);
             }
 
+
             // base arm - the one that moves the 🅱️ase
-
-
             if (gamepad2.a) {
                 baseArm.setPower(0.7);
 
@@ -84,9 +86,9 @@ public class TeleOpMode extends LinearOpMode {
 
             else{
                 baseArm.setPower(0);
-
             }
 
+            //grab hand open/close
             if (gamepad2.dpad_left) {
                 servoPos += .001;
                 grabHand.setPosition(servoPos);
@@ -97,6 +99,7 @@ public class TeleOpMode extends LinearOpMode {
                 grabHand.setPosition(servoPos);
 
             }
+
 
             telemetry.addData("Servo Position: ", servoPos);
             telemetry.addData( "Status:", "Running");
