@@ -50,9 +50,9 @@ import java.util.List;
 public class OpenCVTestTwo extends LinearOpMode
 {
     OpenCvCamera phoneCam;
-    StageSwitchingPipeline stageSwitchingPipelineOne;
-    StageSwitchingPipeline stageSwitchingPipelineTwo;
-    StageSwitchingPipeline stageSwitchingPipelineThree;
+    RedStageSwitchingPipeline stageSwitchingPipelineOne;
+    RedStageSwitchingPipeline stageSwitchingPipelineTwo;
+    RedStageSwitchingPipeline stageSwitchingPipelineThree;
 
     @Override
     public void runOpMode()
@@ -67,7 +67,7 @@ public class OpenCVTestTwo extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         phoneCam.openCameraDevice();
-        stageSwitchingPipelineOne = new StageSwitchingPipeline();
+        stageSwitchingPipelineOne = new RedStageSwitchingPipeline();
         phoneCam.setPipeline(stageSwitchingPipelineOne);
         phoneCam.startStreaming(640, 480, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
@@ -93,7 +93,103 @@ public class OpenCVTestTwo extends LinearOpMode
      * particularly useful during pipeline development. We also show how
      * to get data from the pipeline to your OpMode.
      */
-    public static class StageSwitchingPipeline extends OpenCvPipeline
+    public static class RedStageSwitchingPipeline extends OpenCvPipeline
+    {
+        Mat yCbCrChan2Mat = new Mat();
+        Mat thresholdMat = new Mat();
+        Mat contoursOnFrameMat = new Mat();
+        List<MatOfPoint> contoursList = new ArrayList<>();
+        int numContoursFound;
+        //add to x for robot to go further left
+        int[] rectDimension = new int[] {425, 150, 50, 50};
+
+        enum Stage
+        {
+            YCbCr_CHAN2,
+            THRESHOLD,
+            CONTOURS_OVERLAYED_ON_FRAME,
+            RAW_IMAGE,
+        }
+
+        private Stage stageToRenderToViewport = Stage.YCbCr_CHAN2;
+        private Stage[] stages = Stage.values();
+
+        @Override
+        public void onViewportTapped()
+        {
+            /*
+             * Note that this method is invoked from the UI thread
+             * so whatever we do here, we must do quickly.
+             */
+
+            int currentStageNum = stageToRenderToViewport.ordinal();
+
+            int nextStageNum = currentStageNum + 1;
+
+            if(nextStageNum >= stages.length)
+            {
+                nextStageNum = 0;
+            }
+
+            stageToRenderToViewport = stages[nextStageNum];
+        }
+
+        @Override
+        public Mat processFrame(Mat input)
+        {
+            contoursList.clear();
+
+            /*
+             * This pipeline finds the contours of yellow blobs such as the Gold Mineral
+             * from the Rover Ruckus game.
+             */
+            Imgproc.cvtColor(input, yCbCrChan2Mat, Imgproc.COLOR_RGB2YCrCb);
+            Rect rectCrop = new Rect(rectDimension[0], rectDimension[1], rectDimension[2], rectDimension[3]);
+            yCbCrChan2Mat = new Mat(yCbCrChan2Mat, rectCrop);
+            Core.extractChannel(yCbCrChan2Mat, yCbCrChan2Mat, 2);
+            Imgproc.threshold(yCbCrChan2Mat, thresholdMat, 102, 255, Imgproc.THRESH_BINARY_INV);
+            Imgproc.findContours(thresholdMat, contoursList, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+            numContoursFound = contoursList.size();
+            input.copyTo(contoursOnFrameMat);
+            Imgproc.drawContours(contoursOnFrameMat, contoursList, -1, new Scalar(0, 0, 255), 3, 8);
+
+            switch (stageToRenderToViewport)
+            {
+                case YCbCr_CHAN2:
+                {
+                    return yCbCrChan2Mat;
+                }
+
+                case THRESHOLD:
+                {
+                    return thresholdMat;
+                }
+
+                case CONTOURS_OVERLAYED_ON_FRAME:
+                {
+                    return contoursOnFrameMat;
+                }
+
+                case RAW_IMAGE:
+                {
+                    return input;
+                }
+
+                default:
+                {
+                    return input;
+                }
+            }
+        }
+
+        public int getNumContoursFound()
+        {
+            return numContoursFound;
+        }
+        public void setMatSize(int[] dimensions) {rectDimension = dimensions; }
+    }
+
+    public static class BlueStageSwitchingPipeline extends OpenCvPipeline
     {
         Mat yCbCrChan2Mat = new Mat();
         Mat thresholdMat = new Mat();

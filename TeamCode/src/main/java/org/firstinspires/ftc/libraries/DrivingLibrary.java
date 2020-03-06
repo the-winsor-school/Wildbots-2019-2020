@@ -158,13 +158,16 @@ public class DrivingLibrary {
         if (goalAngle > getIMUAngle() || goalAngle == 0) {
             positive = true;
         }
-        while (Math.abs(angle - getIMUAngle()) > .1) {
+        while (Math.abs(angle - getIMUAngle()) > .15) {
             if (positive) {
                 bevelDrive(0, 0, .25f);
             }
             else {
                 bevelDrive(0, 0, -.25f);
             }
+            opMode.telemetry.addData("Angle the robot thinks it's at", getIMUAngle());
+            opMode.telemetry.addData("Angle the robot is trying to get to", goalAngle);
+            opMode.telemetry.update();
         }
         brakeStop();
         targetAngle = getIMUAngle();
@@ -179,10 +182,10 @@ public class DrivingLibrary {
             if (vt == 0) {
                 if (Math.abs(getIMUAngle() - targetAngle) >= .1) {
                     if (getIMUAngle() > 0) {
-                        vt -= .175;
+                        vt = .1;
                     }
                     else {
-                        vt += .175;
+                        vt = .1;
                     }
                 }
             }

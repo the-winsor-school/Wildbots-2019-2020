@@ -29,7 +29,7 @@ public class BlueSkystoneOnFoundation extends LinearOpMode {
     Servo dragYoda;
 
     OpenCvCamera phoneCam;
-    OpenCVTestTwo.StageSwitchingPipeline stageSwitchingPipeline;
+    OpenCVTestTwo.BlueStageSwitchingPipeline stageSwitchingPipeline;
 
     Rev2mDistanceSensor stoneDistSensor;
 
@@ -56,7 +56,7 @@ public class BlueSkystoneOnFoundation extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         phoneCam.openCameraDevice();
-        stageSwitchingPipeline = new OpenCVTestTwo.StageSwitchingPipeline();
+        stageSwitchingPipeline = new OpenCVTestTwo.BlueStageSwitchingPipeline();
         phoneCam.setPipeline(stageSwitchingPipeline);
         phoneCam.startStreaming(640, 480, OpenCvCameraRotation.UPSIDE_DOWN);
 

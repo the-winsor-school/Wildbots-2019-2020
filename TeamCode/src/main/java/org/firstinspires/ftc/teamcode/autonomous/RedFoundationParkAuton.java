@@ -35,44 +35,23 @@ public class RedFoundationParkAuton extends LinearOpMode {
         if (opModeIsActive()) {
             if (!ranOnce) {
                 //positive y value to drive backwards
-                drivingLibrary.bevelDrive(0, .75f, 0);
-                sleep(825);
-                drivingLibrary.brakeStop();
                 //strafe towards wall
                 drivingLibrary.bevelDrive(.5f, 0, 0);
                 sleep(1000);
                 drivingLibrary.brakeStop();
                 //grab foundation
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
+                dragNoYoda.setPosition(.85);
+                dragYoda.setPosition(.1);
                 sleep(1500);
-                //strafe away from wall
-                /*drivingLibrary.bevelDrive(-.25f, 0, 0);
-                sleep(250);
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
-                sleep(250);
-                drivingLibrary.brakeStop();*/
                 //negative y value to drive forwards
                 drivingLibrary.bevelDrive(0, -.5f, 0);
-                sleep(250);
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
-                sleep(250);
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
-                sleep(250);
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
-                sleep(250);
-                dragNoYoda.setPosition(1);
-                dragYoda.setPosition(0);
+                sleep(1500);
                 drivingLibrary.brakeStop();
                 sleep(100);
                 drivingLibrary.spinToAngle(-Math.PI/2 - .1);
                 sleep(500);
-                drivingLibrary.drive(0, .5f, 0);
-                sleep(1500);
+                /*drivingLibrary.drive(0, .5f, -.25f);
+                sleep(1500);*/
                 dragNoYoda.setPosition(.1);
                 dragYoda.setPosition(.95);
                 //strafe away from foundation
@@ -80,9 +59,9 @@ public class RedFoundationParkAuton extends LinearOpMode {
                 sleep(250);
                 drivingLibrary.brakeStop();
                 //strafe into the wall at half speed because we are nice yay
-                drivingLibrary.bevelDrive(.5f, 0, 0);
+                /*drivingLibrary.bevelDrive(.5f, 0, 0);
                 sleep(1000);
-                drivingLibrary.brakeStop();
+                drivingLibrary.brakeStop();*/
                 //back up to parking spot
                 drivingLibrary.bevelDrive(0, -.75f, 0);
                 sleep(750);

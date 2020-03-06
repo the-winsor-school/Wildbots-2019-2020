@@ -21,19 +21,6 @@ public class PurpleAutonPark extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
-    DcMotor dragArm;
-    DcMotor grabArm;
-
-    Servo grabHand;
-
-    OpenCvCamera phoneCam;
-    OpenCVTestTwo.StageSwitchingPipeline stageSwitchingPipeline;
-
-    Rev2mDistanceSensor stoneDistSensor;
-    Rev2mDistanceSensor wallDistSensor;
-
-    String identity;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,12 +29,6 @@ public class PurpleAutonPark extends LinearOpMode {
         drivingLibrary.setSpeed(1);
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
-
-
-        dragArm = hardwareMap.get(DcMotor.class, "dragArm");
-        grabArm = hardwareMap.get(DcMotor.class, "grabArm");
-
-        grabHand = hardwareMap.get(Servo.class, "grabHand");
 
         boolean ranOnce = false;
 
